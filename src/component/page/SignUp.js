@@ -19,7 +19,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import axios from "axios";
+//import axios from "axios";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // 신규 사용자 가입
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
@@ -94,7 +94,7 @@ export default function SignUp() {
     });
   };
 
-  const register = () => {
+  /* const register = () => {
     axios
       .post("http://localhost:1337/api/auth/local/register", {
         usernickname: values["nickname"],
@@ -112,7 +112,8 @@ export default function SignUp() {
         // Handle error.
         console.log("An error occurred:", error.response);
       });
-  };
+  }; */
+  
   /* const handleSubmit = async () => {
         await axios.post('/api/createUser', values)
         .then((Response)=>{
