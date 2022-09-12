@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -19,7 +20,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-//import axios from "axios";
+import { post, put, axios } from "axios";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // 신규 사용자 가입
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
@@ -54,7 +55,8 @@ export default function SignUp() {
   // const [password, setPassword] = useState("");
   // const auth = getAuth();
 
-  const [values, setValues] = React.useState({
+  const navigate = useNavigate();
+  const [values, setValues] = useState({
     // state with multiple keys
     nickname: "",
     email: "",
@@ -85,26 +87,32 @@ export default function SignUp() {
     event.preventDefault();
   };
 
-  const handleSubmit = (event) => {
+  /* const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
-  };
-
-  /* const register = () => {
+  }; */
+  const config = { headers: { "Content-Type": "application/json" } };
+  const register = () => {
     axios
-      .post("http://localhost:1337/api/auth/local/register", {
-        usernickname: values["nickname"],
-        email: values["email"],
-        password: values["password"],
-      })
+      .post(
+        "ljlee-de.ddns.net:8080",
+        {
+          usernickname: values["nickname"],
+          email: values["email"],
+          password: values["password"],
+        },
+        config
+      )
       // response를 받아온다
       .then((response) => {
         // Handle success.
         console.log("Well done!");
+        console.log(response);
+        console.log(response.data);
         console.log("User profile", response.data.user);
         console.log("User token", response.data.jwt);
       })
@@ -112,8 +120,8 @@ export default function SignUp() {
         // Handle error.
         console.log("An error occurred:", error.response);
       });
-  }; */
-  
+  };
+
   /* const handleSubmit = async () => {
         await axios.post('/api/createUser', values)
         .then((Response)=>{
@@ -149,7 +157,7 @@ export default function SignUp() {
           <Box
             component="form"
             noValidate
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2} /*레이아웃을 결정하는 property*/>
@@ -248,14 +256,20 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={handleSubmit}
+              onClick={register}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  href="/SignIn"
+                  variant="body2"
+                  /* onClick={() => {
+                    navigate("/SignIn");
+                  }} */
+                >
                   Already have an account? Sign in
                 </Link>
               </Grid>

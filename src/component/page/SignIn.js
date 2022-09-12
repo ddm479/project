@@ -1,29 +1,33 @@
-import * as React from 'react';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography'; // 텍스트 font를 지정할수 있게함
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-
+import * as React from "react";
+import { useNavigate } from "react-router-dom";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+import Link from "@mui/material/Link";
+import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import Typography from "@mui/material/Typography"; // 텍스트 font를 지정할수 있게함
+import Container from "@mui/material/Container";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography
+      variant="body2"
+      color="text.secondary"
+      align="center"
+      {...props}
+    >
+      {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
         Your Website
-      </Link>{' '}
+      </Link>{" "}
       {new Date().getFullYear()}
-      {'.'}
+      {"."}
     </Typography>
   );
 }
@@ -31,16 +35,16 @@ function Copyright(props) {
 const theme = createTheme();
 
 function SignIn() {
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
-      email: data.get('email'),
-      password: data.get('password'),
+      email: data.get("email"),
+      password: data.get("password"),
     });
-    
   };
-  
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -48,27 +52,40 @@ function SignIn() {
         <Box // div 같은 느낌
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }} /* 구글 우상단에 있는 profile 사진같은 css 효과를 줄 수 있는 컴포넌트*/>
+          <Avatar
+            sx={{
+              m: 1,
+              bgcolor: "secondary.main",
+            }} /* 구글 우상단에 있는 profile 사진같은 css 효과를 줄 수 있는 컴포넌트*/
+          >
             <LockOutlinedIcon />
-          </Avatar> 
-          <Typography component="h1" variant="h5" /* h1 태그로 감싼다 디자인은 h5 태그, 텍스트 설정을 해줄 수 있는 컴포넌트 */> 
+          </Avatar>
+          <Typography
+            component="h1"
+            variant="h5" /* h1 태그로 감싼다 디자인은 h5 태그, 텍스트 설정을 해줄 수 있는 컴포넌트 */
+          >
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box
+            component="form"
+            onSubmit={handleSubmit}
+            noValidate
+            sx={{ mt: 1 }}
+          >
             <TextField
               margin="normal"
-              required   // 필수 입력
+              required // 필수 입력
               fullWidth
               id="email"
-              label="Email Address"  // 보이는 내용
+              label="Email Address" // 보이는 내용
               name="email"
               autoComplete="email"
-              autoFocus     // 처음에 자동으로 커서 이동
+              autoFocus // 처음에 자동으로 커서 이동
             />
             <TextField
               margin="normal"
@@ -92,14 +109,20 @@ function SignIn() {
             >
               Sign In
             </Button>
-            <Grid container  /* container가 있는게 행*/> 
-              <Grid item xs /* 열 */> 
-                <Link href="#" variant="body2" > 
+            <Grid container /* container가 있는게 행*/>
+              <Grid item xs /* 열 */>
+                <Link href="#" variant="body2">
                   Forgot password?
-                </Link> 
+                </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link
+                  href="/"
+                  variant="body2"
+                  /* onClick={() => {
+                    navigate("/");
+                  }} */
+                >
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
