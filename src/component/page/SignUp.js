@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Avatar from "@mui/material/Avatar";
+import { Avatar, FormHelperText } from "@mui/material/";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -50,9 +50,9 @@ const theme = createTheme();
 // ThemeProvider 안의 theme attribute 값으로 위에서 만들었던 테마를 연결하면 css에 적용된다.
 
 export default function SignUp() {
-  // const [nickname, setNickname] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // const auth = getAuth();
 
   const navigate = useNavigate();
@@ -64,8 +64,36 @@ export default function SignUp() {
     showPassword: false,
   });
 
+  const [nicknameError, setNicknameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const ChangePassword = (event) => {
+    event.preventDefault();
+    setPassword(event.target.value);
+    console.log(values, event.target.name, event.target.value);
+
+    // 비밀번호 유효성 체크
+    const passwordRegex =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
+    if (!passwordRegex.test(password))
+      setPasswordError(
+        "숫자, 영문자, 특수문자 세 가지 모두를 사용해서 8자리 이상 입력하세요."
+      );
+    else setPasswordError("");
+  };
+  // https://phrygia.github.io/react/2021-11-25-mui-react/
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value }); // ...는 객체에 속한 값만 들고오게 한다., spread operator
+
+    // state를 한 번에 관리하면 값이 느리게 바뀜
+    console.log(values, event.target.name, event.target.value);
+    // 이메일 유효성 체크
+    const emailRegex =
+      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+    if (!emailRegex.test(values.email))
+      setEmailError("올바른 이메일 형식이 아닙니다.");
+    else setEmailError("");
   };
 
   /* const onChange = e => {
@@ -96,7 +124,8 @@ export default function SignUp() {
     });
   }; */
   const config = { headers: { "Content-Type": "application/json" } };
-  const register = () => {
+  const register = (e) => {
+    e.preventDefault(); // 새로고침 방지
     axios
       .post(
         "ljlee-de.ddns.net:8080",
@@ -169,6 +198,7 @@ export default function SignUp() {
                   fullWidth
                   id="nickname"
                   label="Nick Name" // 버튼 위에 뜨는 내용
+                  helperText="Incorrect entry." // 버튼 밑에 뜨는 내용
                   value={values.nickname}
                   onChange={handleChange}
                   autoFocus
@@ -181,7 +211,9 @@ export default function SignUp() {
                   fullWidth
                   id="email"
                   label="Email Address"
+                  helperText="ex) gachon@google.com"
                   name="email"
+                  error={emailError !== "" || false}
                   autoComplete="email"
                   value={values.email}
                   onChange={handleChange}
@@ -196,9 +228,11 @@ export default function SignUp() {
                     id="outlined-adornment-password"
                     type={values.showPassword ? "text" : "password"}
                     required
+                    label="Password"
                     name="password"
-                    value={values.password}
-                    onChange={handleChange}
+                    value={password}
+                    error={passwordError !== "" || false}
+                    onChange={ChangePassword}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -215,7 +249,6 @@ export default function SignUp() {
                         </IconButton>
                       </InputAdornment>
                     }
-                    label="Password"
                   />
                 </FormControl>
               </Grid>
