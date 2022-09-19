@@ -14,7 +14,7 @@ import Typography from "@mui/material/Typography"; // 텍스트 font를 지정�
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-function Copyright(props) {
+/* function Copyright(props) {
   return (
     <Typography
       variant="body2"
@@ -30,7 +30,7 @@ function Copyright(props) {
       {"."}
     </Typography>
   );
-}
+} */
 
 const theme = createTheme();
 
@@ -97,10 +97,10 @@ function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
+            {/* <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me" // label 값을 클릭해도 체크됨
-            />
+            /> */}
             <Button
               type="submit"
               fullWidth
@@ -110,18 +110,18 @@ function SignIn() {
               Sign In
             </Button>
             <Grid container /* container가 있는게 행*/>
-              <Grid item xs /* 열 */>
+              {/* <Grid item xs // 열 >
                 <Link href="#" variant="body2">
                   Forgot password?
                 </Link>
-              </Grid>
+              </Grid> */}
               <Grid item>
                 <Link
-                  href="/"
+                  href="/Agree"
                   variant="body2"
-                  /* onClick={() => {
-                    navigate("/");
-                  }} */
+                /* onClick={() => {
+                  navigate("/");
+                }} */
                 >
                   {"Don't have an account? Sign Up"}
                 </Link>
@@ -129,7 +129,7 @@ function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

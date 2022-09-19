@@ -20,13 +20,13 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { post, put, axios } from "axios";
+import axios from "axios";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // 신규 사용자 가입
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-analytics.js";
 
-function Copyright(props) {
+/* function Copyright(props) {
   return (
     <Typography
       variant="body2"
@@ -42,7 +42,7 @@ function Copyright(props) {
       {"."}
     </Typography>
   );
-}
+} */
 
 const theme = createTheme();
 // createTheme({}) {} 내부에 만들고 싶은 테마 style을 작성.(여러개를 만들어도 됨)
@@ -123,12 +123,19 @@ export default function SignUp() {
       password: data.get("password"),
     });
   }; */
+
+  /* const register = () => {
+    fetch("ljlee-de.ddns.net:8080")
+      .then((res) => res.json())
+      ;
+  }; */
+
   const config = { headers: { "Content-Type": "application/json" } };
   const register = (e) => {
     e.preventDefault(); // 새로고침 방지
     axios
       .post(
-        "ljlee-de.ddns.net:8080",
+        "https://ljlee-de.ddns.net:8080",
         {
           usernickname: values["nickname"],
           email: values["email"],
@@ -167,7 +174,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" >
         <CssBaseline />
         <Box
           sx={{
@@ -276,14 +283,18 @@ export default function SignUp() {
                                     }
                                 />
                             </Grid> */}
-              <Grid item xs={12}>
+              <Grid xs={12}>
+                <Link
+                  href="/Agree"></Link>
+              </Grid>
+              {/* <Grid item xs={12}>
                 <FormControlLabel
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
                   label="I want to receive inspiration, marketing promotions and updates via email."
                 />
-              </Grid>
+              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -297,11 +308,11 @@ export default function SignUp() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link
-                  href="/SignIn"
+                  href="/"
                   variant="body2"
-                  /* onClick={() => {
-                    navigate("/SignIn");
-                  }} */
+                /* onClick={() => {
+                  navigate("/SignIn");
+                }} */
                 >
                   Already have an account? Sign in
                 </Link>
@@ -309,8 +320,8 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
-    </ThemeProvider>
+    </ThemeProvider >
   );
 }
