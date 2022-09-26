@@ -35,7 +35,7 @@ function Agree() {
             <p>dafsdasdf</p>
             <input type="checkbox" />test1
             <button type="button" onClick={() => {
-                navigate('/');
+                navigate('/signup');
             }}>회원가입하기</button>
 
         </Wrapper >
