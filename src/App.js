@@ -14,6 +14,7 @@ function App() {
         <Route index element={<SignIn />} />
         <Route path="Signup" element={<SignUp />} />
         <Route path="Agree" element={<Agree />} />
+        <Route path="Test" element={<Agree />} />
       </Routes>
     </BrowserRouter>
   );

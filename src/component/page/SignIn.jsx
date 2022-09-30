@@ -118,7 +118,7 @@ function SignIn() {
               </Grid>
               <Grid item>
                 <Link
-                  href="/"
+                  href="/Agree"
                   variant="body2"
                   /* onClick={() => {
                     navigate("/");

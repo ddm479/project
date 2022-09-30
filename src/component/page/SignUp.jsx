@@ -20,11 +20,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-
-
-
-import { post, put, axios } from "axios";
-
+import axios from "axios";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // 신규 사용자 가입
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
@@ -54,13 +50,13 @@ const theme = createTheme();
 // ThemeProvider 안의 theme attribute 값으로 위에서 만들었던 테마를 연결하면 css에 적용된다.
 
 export default function SignUp() {
-  // const [nickname, setNickname] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // const auth = getAuth();
 
   const navigate = useNavigate();
-  /* const [values, setValues] = useState({
+  const [values, setValues] = useState({
     // state with multiple keys
     nickname: "",
     email: "",
@@ -98,7 +94,7 @@ export default function SignUp() {
     if (!emailRegex.test(values.email))
       setEmailError("올바른 이메일 형식이 아닙니다.");
     else setEmailError("");
-  }; */
+  };
 
   /* const onChange = e => {
         const { name, value } = e.target;
@@ -107,63 +103,6 @@ export default function SignUp() {
           [name]: value
         });
     }; */
-  //이름, 이메일, 비밀번호, 비밀번호 확인
-  const [name, setName] = useState < string > ('')
-  const [email, setEmail] = useState < string > ('')
-  const [password, setPassword] = useState < string > ('')
-  const [passwordConfirm, setPasswordConfirm] = useState < string > ('')
-
-  //오류메시지 상태저장
-  const [nameMessage, setNameMessage] = useState < string > ('')
-  const [emailMessage, setEmailMessage] = useState < string > ('')
-  const [passwordMessage, setPasswordMessage] = useState < string > ('')
-  const [passwordConfirmMessage, setPasswordConfirmMessage] = useState < string > ('')
-
-  // 유효성 검사
-  const [isName, setIsName] = useState < boolean > (false)
-  const [isEmail, setIsEmail] = useState < boolean > (false)
-  const [isPassword, setIsPassword] = useState < boolean > (false)
-  const [isPasswordConfirm, setIsPasswordConfirm] = useState < boolean > (false)
-  // 이름
-  const onChangeName = useCallback((e) => {
-    setName(e.target.value)
-    if (e.target.value.length < 2 || e.target.value.length > 5) {
-      setNameMessage('2글자 이상 5글자 미만으로 입력해주세요.')
-      setIsName(false)
-    } else {
-      setNameMessage('올바른 이름 형식입니다 :)')
-      setIsName(true)
-    }
-  }, [])
-  // 이메일
-  const onChangeEmail = useCallback((e) => {
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/
-    const emailCurrent = e.target.value
-    setEmail(emailCurrent)
-
-    if (!emailRegex.test(emailCurrent)) {
-      setEmailMessage('이메일 형식이 틀렸어요! 다시 확인해주세요 ㅜ ㅜ')
-      setIsEmail(false)
-    } else {
-      setEmailMessage('올바른 이메일 형식이에요 : )')
-      setIsEmail(true)
-    }
-  }, [])
-  // 비밀번호
-  const onChangePassword = useCallback((e) => {
-    const passwordRegex = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
-    const passwordCurrent = e.target.value
-    setPassword(passwordCurrent)
-
-    if (!passwordRegex.test(passwordCurrent)) {
-      setPasswordMessage('숫자+영문자+특수문자 조합으로 8자리 이상 입력해주세요!')
-      setIsPassword(false)
-    } else {
-      setPasswordMessage('안전한 비밀번호에요 : )')
-      setIsPassword(true)
-    }
-  }, [])
 
   const handleClickShowPassword = () => {
     setValues({
@@ -268,7 +207,7 @@ export default function SignUp() {
                   label="Nick Name" // 버튼 위에 뜨는 내용
                   helperText="Incorrect entry." // 버튼 밑에 뜨는 내용
                   value={values.nickname}
-                  onChange={onChangeName}
+                  onChange={handleChange}
                   autoFocus
                 />
               </Grid>
@@ -284,7 +223,7 @@ export default function SignUp() {
                   error={emailError !== "" || false}
                   autoComplete="email"
                   value={values.email}
-                  onChange={onChangEmail}
+                  onChange={handleChange}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -300,7 +239,7 @@ export default function SignUp() {
                     name="password"
                     value={password}
                     error={passwordError !== "" || false}
-                    onChange={onChangePassword}
+                    onChange={ChangePassword}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
