@@ -1,5 +1,5 @@
 import React from 'react';
-import GoogleLogin from 'react-google-login';
+// import GoogleLogin from 'react-google-login';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 const Wrapper = styled.div`
@@ -33,7 +33,7 @@ function LoginGoogle() {
   };
 
   return (
-    <div>
+    {/* <div>
 
       <GoogleLogin
         clientId={clientId}
@@ -42,7 +42,7 @@ function LoginGoogle() {
         onFailure={onFailure}
         cookiePolicy="single_host_origin"
       />
-    </div>
+    </div> */}
   )
 }
 

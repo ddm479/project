@@ -68,10 +68,10 @@ export default function SignUp() {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const ChangePassword = (event) => {
+  const ChangePassword = (event) => { // 현재 password만 따로 처리해봄
     event.preventDefault();
     setPassword(event.target.value);
-    console.log(values, event.target.name, event.target.value);
+    console.log(values, event.target.name, event.target.value, password);
 
     // 비밀번호 유효성 체크
     const passwordRegex =
@@ -86,7 +86,7 @@ export default function SignUp() {
   const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value }); // ...는 객체에 속한 값만 들고오게 한다., spread operator
 
-    // state를 한 번에 관리하면 값이 느리게 바뀜
+    // state를 한 번에 관리하면 값이 느리게 바뀜 -> 유효성 검사 한다면 훅 사용해보자
     console.log(values, event.target.name, event.target.value);
     // 이메일 유효성 체크
     const emailRegex =

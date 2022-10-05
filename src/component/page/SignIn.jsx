@@ -13,7 +13,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography"; // 텍스트 font를 지정할수 있게함
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import LoginGoogle from "./LoginGoogle";
+import GoogleLogin from "./GoogleLogin";
+// import GoogleLogin from "react-google-login";
 function Copyright(props) {
   return (
     <Typography
@@ -109,7 +110,7 @@ function SignIn() {
             >
               Sign In
             </Button>
-            <LoginGoogle/>
+            <GoogleLogin/>
             <Grid container /* container가 있는게 행*/>
               <Grid item xs /* 열 */>
                 <Link href="#" variant="body2">
