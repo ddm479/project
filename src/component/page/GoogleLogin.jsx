@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 
 import styled from "styled-components";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 
 /* function GoogleLogin() {
@@ -127,7 +128,7 @@ function GoogleLogin() {
                 data-type="standard"
                 data-size="large"
                 data-theme="outline"
-                data-text="sign_in_withfff"
+                data-text="텍스트 바꾸기"
                 data-shape="rectangular"
                 data-logo_alignment="left">
             </div>

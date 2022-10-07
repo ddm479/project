@@ -14,6 +14,8 @@ import Typography from "@mui/material/Typography"; // 텍스트 font를 지정�
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import GoogleLogin from "./GoogleLogin";
+import LoginGoogle from "./LoginGoogle";
+import { Login } from "@mui/icons-material";
 // import GoogleLogin from "react-google-login";
 function Copyright(props) {
   return (
@@ -110,7 +112,7 @@ function SignIn() {
             >
               Sign In
             </Button>
-            <GoogleLogin/>
+            <LoginGoogle/>
             <Grid container /* container가 있는게 행*/>
               <Grid item xs /* 열 */>
                 <Link href="#" variant="body2">

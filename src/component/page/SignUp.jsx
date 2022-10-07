@@ -133,9 +133,7 @@ export default function SignUp() {
   const config = { headers: { "Content-Type": "application/json" } };
   const register = (e) => {
     e.preventDefault(); // 새로고침 방지
-    axios
-      .post(
-        "https://ljlee-de.ddns.net:8080",
+    axios.post("https://ljlee-de.ddns.net:8080/register",
         {
           usernickname: values["nickname"],
           email: values["email"],
