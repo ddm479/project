@@ -1,5 +1,4 @@
 import React from 'react';
-
 // import GoogleLogin from 'react-google-login'; // 다른 패키지로 사용
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
@@ -14,6 +13,36 @@ import { useGoogleLogin } from '@react-oauth/google';
 // axios.defaults.withCredentials = true;
 
 function LoginGoogle() {
+  const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
+  // 구글 oauth 클라이언트 id
+  const navigate = useNavigate();
+
+  const login = useGoogleLogin({
+    onSuccess: async (tokenResponse, codeResponse) => {
+      console.log("tokenResponse입니다.", tokenResponse);
+      console.log("codeResponse입니다.", codeResponse);
+      const tokens = await axios.post("/login",
+      {
+        idToken: codeResponse,
+      });
+      console.log(tokens);
+    },
+    onError: (errorResponse) => console.log(errorResponse),
+    flow: 'auth-code',
+  });
+
+  return (
+    <GoogleOAuthProvider clientId={clientId}>
+      <MyCustomButton onClick={() => login()}>
+        Sign in with Google 🚀{' '}
+      </MyCustomButton>;
+      
+    </GoogleOAuthProvider>
+  )
+}
+
+export default LoginGoogle;
+/* function LoginGoogle() {
   const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
   // 구글 oauth 클라이언트 id
   const navigate = useNavigate();
@@ -55,23 +84,14 @@ function LoginGoogle() {
         }} />
     </GoogleOAuthProvider>
   )
-}
-
-export default LoginGoogle;
+} */
 
 /* import React from 'react';
 >>>>>>> Stashed changes
 // import GoogleLogin from 'react-google-login';
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
-/* const Wrapper = styled.div`
-    paddign: 1em;
-    background: grey
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-`;
+
 function LoginGoogle() {
   const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
   // 구글 oauth 클라이언트 id
