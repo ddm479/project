@@ -1,6 +1,5 @@
 import React from 'react';
-<<<<<<< Updated upstream
-=======
+
 // import GoogleLogin from 'react-google-login'; // 다른 패키지로 사용
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
