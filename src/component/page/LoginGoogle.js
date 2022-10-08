@@ -22,9 +22,9 @@ function LoginGoogle() {
       console.log("tokenResponse입니다.", tokenResponse);
       console.log("codeResponse입니다.", codeResponse);
       const tokens = await axios.post("/login",
-      {
-        idToken: codeResponse,
-      });
+        {
+          idToken: codeResponse,
+        });
       console.log(tokens);
     },
     onError: (errorResponse) => console.log(errorResponse),
@@ -32,12 +32,12 @@ function LoginGoogle() {
   });
 
   return (
-    <GoogleOAuthProvider clientId={clientId}>
-      <MyCustomButton onClick={() => login()}>
-        Sign in with Google 🚀{' '}
-      </MyCustomButton>;
-      
-    </GoogleOAuthProvider>
+
+    <MyCustomButton onClick={() => login()}>
+      Sign in with Google 🚀{' '}
+    </MyCustomButton>
+
+
   )
 }
 

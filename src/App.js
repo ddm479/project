@@ -9,6 +9,7 @@ import app from "./firebase";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HelmetProvider, Helmet } from "react-helmet-async"; // meta태그 사용 패키지
 
+
 function App() {
   return (
     <BrowserRouter>
