@@ -24,7 +24,7 @@ function LoginGoogle() {
       console.log("codeResponse입니다.", codeResponse);
       const tokens = await axios.post("/login",
         {
-          idToken: codeResponse,
+          idToken: tokenResponse,
         });
       console.log(tokens);
     },
@@ -34,9 +34,9 @@ function LoginGoogle() {
 
   return (
     <GoogleOAuthProvider clientId={clientId} >
-      <MyCustomButton onClick={() => login()}>
+      <button onClick={() => login()}>
         Sign in with Google 🚀{' '}
-      </MyCustomButton>;
+      </button>;
     </GoogleOAuthProvider>
 
 
