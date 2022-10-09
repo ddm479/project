@@ -26,7 +26,7 @@ function LoginGoogle() {
         {
           idToken: tokenResponse,
         });
-      console.log(tokens);
+      // console.log(tokens);
     },
     onError: (errorResponse) => console.log(errorResponse),
     flow: 'auth-code',
