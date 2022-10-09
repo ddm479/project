@@ -9,6 +9,7 @@ import axios from "axios";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
+import MycustomButton from './MycustomButton';
 
 // axios.defaults.withCredentials = true;
 
@@ -32,10 +33,11 @@ function LoginGoogle() {
   });
 
   return (
-
-    <MyCustomButton onClick={() => login()}>
-      Sign in with Google 🚀{' '}
-    </MyCustomButton>
+    <GoogleOAuthProvider clientId={clientId} >
+      <MyCustomButton onClick={() => login()}>
+        Sign in with Google 🚀{' '}
+      </MyCustomButton>;
+    </GoogleOAuthProvider>
 
 
   )
