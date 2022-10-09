@@ -42,20 +42,26 @@ function GoogleLogin() {
         console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
     }
 
-
+    function handleCallbackResponse(response){
+        
+    }
     useEffect(() => {
         const script = document.createElement("script");
         script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
         document.body.appendChild(script);
-    });
+        google.accounts.id.initialize({
+            client_id: clientId,
+            callback: handleCallbackResponse
+        })
+    }, []);
 
 
     return (
         <div>
             <div id="g_id_onload"
                 data-client_id={clientId}
-                data-login_uri="http://localhost:3000/"
+                data-login_uri="http://localhost:3000"
                 data-auto_prompt="false">
             </div>
             <div className="g_id_signin"
