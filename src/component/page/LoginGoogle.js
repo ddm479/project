@@ -18,11 +18,12 @@ function LoginGoogle() {
   // 구글 oauth 클라이언트 id
   const navigate = useNavigate();
 
+  // "proxy": "http://ljlee-de.ddns.net:8080"
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse, codeResponse) => {
       console.log("tokenResponse입니다.", tokenResponse);
       console.log("codeResponse입니다.", codeResponse);
-      const tokens = await axios.post("/login",
+      const tokens = await axios.post("http://ljlee-de.ddns.net:8080/login",
         {
           idToken: tokenResponse,
         });
@@ -36,7 +37,7 @@ function LoginGoogle() {
     <GoogleOAuthProvider clientId={clientId} >
       <button onClick={() => login()}>
         Sign in with Google 🚀{' '}
-      </button>;
+      </button>
     </GoogleOAuthProvider>
 
 
