@@ -9,6 +9,7 @@ import axios from "axios";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
+import { OAuth2Client } from 'google-auth-library';
 
 
 // axios.defaults.withCredentials = true;
@@ -16,6 +17,8 @@ import { useGoogleLogin } from '@react-oauth/google';
 function LoginGoogle() {
   const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
   // 구글 oauth 클라이언트 id
+
+  const client = new OAuth2Client(clientId);
   const navigate = useNavigate();
 
   // "proxy": "http://ljlee-de.ddns.net:8080"
@@ -27,10 +30,23 @@ function LoginGoogle() {
         {
           idToken: codeResponse,
         });
+      async function verify() {
+        const ticket = await client.verifyIdToken({
+          idToken: codeResponse,
+          audience: clientId,  // Specify the CLIENT_ID of the app that accesses the backend
+          // Or, if multiple clients access the backend:
+          //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+        });
+        const payload = ticket.getPayload();
+        const userid = payload['sub'];
+        // If request specified a G Suite domain:
+        // const domain = payload['hd'];
+      }
+      verify().catch(console.error);
       // console.log(tokens);
     },
     // withCredentials: true, // 쿠키 cors 통신 설정
-    
+
     onError: (errorResponse) => console.log(errorResponse),
 
   });
