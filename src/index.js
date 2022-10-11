@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
-  // 구글 oauth 클라이언트 id
+// 구글 oauth 클라이언트 id
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
