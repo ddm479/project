@@ -24,6 +24,7 @@ function LoginGoogle() {
   // "proxy": "http://ljlee-de.ddns.net:8080"
   const login = useGoogleLogin({
     flow: 'auth-code', // code 모델 방식
+    redirect_uri: "http://localhost:3000/Agree",
     onSuccess: async (codeResponse) => {
       console.log("codeResponse입니다.", codeResponse);
       const tokens = await axios.post("/login",
@@ -33,7 +34,6 @@ function LoginGoogle() {
       
     },
     // withCredentials: true, // 쿠키 cors 통신 설정
-
     onError: (errorResponse) => console.log(errorResponse),
 
   });
