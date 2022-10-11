@@ -1,7 +1,7 @@
 import React from "react";
 
 
-function Content(){
+function Title(){
 
 
     return(
@@ -9,4 +9,4 @@ function Content(){
     )
 }
 
-export default Content;
+export default Title;

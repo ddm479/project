@@ -53,9 +53,9 @@ function GoogleLogin() {
         /* google.accounts.id.initialize({
             client_id: clientId,
             callback: handleCallbackResponse
-        }) */
+        }) 
 
-        /* google.accounts.id.renderButton(
+        google.accounts.id.renderButton(
             
         ) */
     }, []);
