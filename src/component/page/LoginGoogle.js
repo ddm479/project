@@ -18,7 +18,7 @@ function LoginGoogle() {
   const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
   // 구글 oauth 클라이언트 id
 
-  
+
   const navigate = useNavigate();
 
   // "proxy": "http://ljlee-de.ddns.net:8080"
@@ -26,12 +26,20 @@ function LoginGoogle() {
     flow: 'auth-code', // code 모델 방식
     redirect_uri: "http://localhost:3000/Agree",
     onSuccess: async (codeResponse) => {
-      console.log("codeResponse입니다.", codeResponse);
-      const tokens = await axios.post("/login",
-        {
-          idToken: codeResponse,
-        });
-      
+      try {
+        console.log("codeResponse입니다.", codeResponse);
+        // await는 async 함수 안에서만 사용가능
+        const tokens = await axios.post("http://ljlee-de.ddns.net:8080/login",
+          {
+            idToken: codeResponse,
+          }
+        );
+        // console.log(tokens);
+      } catch (error) {
+        console.error(error);
+      }
+
+
     },
     // withCredentials: true, // 쿠키 cors 통신 설정
     onError: (errorResponse) => console.log(errorResponse),
