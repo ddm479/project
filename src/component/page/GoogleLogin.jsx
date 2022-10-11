@@ -50,14 +50,14 @@ function GoogleLogin() {
         script.src = "https://accounts.google.com/gsi/client";
         script.async = true;
         document.body.appendChild(script);
-        google.accounts.id.initialize({
+        /* google.accounts.id.initialize({
             client_id: clientId,
             callback: handleCallbackResponse
         })
 
         google.accounts.id.renderButton(
             
-        )
+        ) */
     }, []);
 
 
