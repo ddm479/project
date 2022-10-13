@@ -50,7 +50,7 @@
       "last 1 safari version"
     ]
   },
-  
+  "proxy": "http://ljlee-de.ddns.net:8080",
   "devDependencies": {
     "assert": "^2.0.0",
     "buffer": "^6.0.3",

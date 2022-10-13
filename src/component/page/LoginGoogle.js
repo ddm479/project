@@ -13,6 +13,16 @@ import { GoogleLoginButton } from "react-social-login-buttons";
 
 
 // axios.defaults.withCredentials = true;
+/* const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = (app) => {
+	app.use(
+		createProxyMiddleware('/login', {
+			target: 'http://ljlee-de.ddns.net:8080', 
+			changeOrigin: true,
+		})
+	);
+}; */
 
 function LoginGoogle() {
   const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
@@ -25,6 +35,7 @@ function LoginGoogle() {
   const login = useGoogleLogin({
     flow: 'auth-code', // code 모델 방식
     redirect_uri: "http://localhost:3000/Agree",
+    // scope: "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
     onSuccess: async (codeResponse) => {
       try {
         console.log("codeResponse입니다.", codeResponse);
