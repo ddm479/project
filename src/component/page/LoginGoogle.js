@@ -20,7 +20,7 @@ function LoginGoogle() {
 
 
   const navigate = useNavigate();
-
+  const address = "http://ljlee-de.ddns.net:8080";
   // "proxy": "http://ljlee-de.ddns.net:8080"
   const login = useGoogleLogin({
     flow: 'auth-code', // code 모델 방식
@@ -29,7 +29,7 @@ function LoginGoogle() {
       try {
         console.log("codeResponse입니다.", codeResponse);
         // await는 async 함수 안에서만 사용가능
-        const tokens = await axios.post("/login",
+        const tokens = await axios.post(address + "/login",
           {
             idToken: codeResponse,
           }
