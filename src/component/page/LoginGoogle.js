@@ -9,7 +9,7 @@ import axios from "axios";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 // import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
-
+import { GoogleLoginButton } from "react-social-login-buttons";
 
 
 // axios.defaults.withCredentials = true;
@@ -29,7 +29,7 @@ function LoginGoogle() {
       try {
         console.log("codeResponse입니다.", codeResponse);
         // await는 async 함수 안에서만 사용가능
-        const tokens = await axios.post("http://ljlee-de.ddns.net:8080/login",
+        const tokens = await axios.post("/login",
           {
             idToken: codeResponse,
           }
@@ -48,9 +48,9 @@ function LoginGoogle() {
 
   return (
     <GoogleOAuthProvider clientId={clientId} >
-      <button onClick={() => login()}>
+      <GoogleLoginButton onClick={() => login()}>
         Sign in with Google 🚀{' '}
-      </button>
+      </GoogleLoginButton>
     </GoogleOAuthProvider>
 
 
