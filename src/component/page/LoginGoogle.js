@@ -2,7 +2,7 @@ import React from 'react';
 // import GoogleLogin from 'react-google-login'; // 다른 패키지로 사용
 import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
-import jwt_decode from "jwt-decode";
+// import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 // https://www.npmjs.com/package/@react-oauth/google 
