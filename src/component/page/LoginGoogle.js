@@ -1,5 +1,6 @@
 import React from 'react';
-// import GoogleLogin from 'react-google-login'; // 다른 패키지로 사용
+// import { GoogleLogin, GoogleLogout } from 'react-google-login';
+// import {useGoogleLogin as GoogleLoginHook} from 'react-google-login'; // 다른 패키지로 사용
 // import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 // import jwt_decode from "jwt-decode";
@@ -10,23 +11,33 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 // import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
+// import {OAuth2Client} from "google-auth-library";
+
 
 
 // axios.defaults.withCredentials = true;
 /* const { createProxyMiddleware } = require('http-proxy-middleware');
 
 module.exports = (app) => {
-	app.use(
-		createProxyMiddleware('/login', {
-			target: 'http://ljlee-de.ddns.net:8080', 
-			changeOrigin: true,
-		})
-	);
+  app.use(
+    createProxyMiddleware('/login', {
+      target: 'http://ljlee-de.ddns.net:8080', 
+      changeOrigin: true,
+    })
+  );
 }; */
 
+const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
+// 구글 oauth 클라이언트 id
+
+/* const oAuth2Client = new OAuth2Client(
+  process.env.REACT_APP_GOOGLE_CLIENT_ID,
+  process.env.REACT_APP_GOOGLE_SECRET_ID,
+  'postmessage',
+); */
+
 function LoginGoogle() {
-  const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
-  // 구글 oauth 클라이언트 id
+  
 
 
   const navigate = useNavigate();
@@ -39,13 +50,16 @@ function LoginGoogle() {
     onSuccess: async (codeResponse) => {
       try {
         console.log("codeResponse입니다.", codeResponse);
+        console.log(codeResponse.code);
+        // const { tokentest } = await oAuth2Client.getToken(codeResponse.code);
+        // console.log(tokentest); 
         // await는 async 함수 안에서만 사용가능
         const tokens = await axios.post(address + "/login",
           {
-            idToken: codeResponse,
+            idToken: codeResponse.code,
           }
         );
-        // console.log(tokens);
+        console.log(tokens);
       } catch (error) {
         console.error(error);
       }
@@ -55,15 +69,22 @@ function LoginGoogle() {
     // withCredentials: true, // 쿠키 cors 통신 설정
     onError: (errorResponse) => console.log(errorResponse),
 
-  });
+  }); // 커스텀 훅
+  
+  
 
+  
   return (
-    <GoogleOAuthProvider clientId={clientId} >
-      <GoogleLoginButton onClick={() => login()}>
-        Sign in with Google 🚀{' '}
-      </GoogleLoginButton>
-    </GoogleOAuthProvider>
+    <div>
+      <GoogleOAuthProvider clientId={clientId} >
+        <GoogleLoginButton onClick={() => login()}>
+          Sign in with Google 🚀{' '}
+        </GoogleLoginButton>
+      </GoogleOAuthProvider>
 
+
+      
+    </div>
 
   )
 }
