@@ -1,49 +1,70 @@
 import React from 'react';
 // import GoogleLogin from 'react-google-login'; // 다른 패키지로 사용
-import styled from "styled-components";
+// import styled from "styled-components";
 import { useNavigate } from 'react-router-dom';
 // import jwt_decode from "jwt-decode";
 import axios from "axios";
 
 // https://www.npmjs.com/package/@react-oauth/google 
 import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GoogleLogin } from '@react-oauth/google';
+// import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
+import { GoogleLoginButton } from "react-social-login-buttons";
 
 
 // axios.defaults.withCredentials = true;
+/* const { createProxyMiddleware } = require('http-proxy-middleware');
+
+module.exports = (app) => {
+	app.use(
+		createProxyMiddleware('/login', {
+			target: 'http://ljlee-de.ddns.net:8080', 
+			changeOrigin: true,
+		})
+	);
+}; */
 
 function LoginGoogle() {
   const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
   // 구글 oauth 클라이언트 id
-  const navigate = useNavigate();
 
+
+  const navigate = useNavigate();
+  const address = "http://ljlee-de.ddns.net:8080";
   // "proxy": "http://ljlee-de.ddns.net:8080"
   const login = useGoogleLogin({
     flow: 'auth-code', // code 모델 방식
+    redirect_uri: "http://localhost:3000/Agree",
+    // scope: "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
     onSuccess: async (codeResponse) => {
-      console.log("codeResponse입니다.", codeResponse);
-      const tokens = await axios.post("/login",
-        {
-          idToken: codeResponse,
-        });
-      // console.log(tokens);
+      try {
+        console.log("codeResponse입니다.", codeResponse);
+        // await는 async 함수 안에서만 사용가능
+        const tokens = await axios.post(address + "/login",
+          {
+            idToken: codeResponse,
+          }
+        );
+        // console.log(tokens);
+      } catch (error) {
+        console.error(error);
+      }
+
+
     },
     // withCredentials: true, // 쿠키 cors 통신 설정
-    
     onError: (errorResponse) => console.log(errorResponse),
 
   });
 
   return (
     <GoogleOAuthProvider clientId={clientId} >
-      <button onClick={() => login()}>
+      <GoogleLoginButton onClick={() => login()}>
         Sign in with Google 🚀{' '}
-      </button>
+      </GoogleLoginButton>
     </GoogleOAuthProvider>
 
-
-  )
+)
 }
 
 export default LoginGoogle;
