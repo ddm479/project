@@ -22,7 +22,7 @@ import styled from "styled-components";
 const Wrapper = styled.div`
     paddign: 1em;
     background: grey;
-    margin: 2vh 25vw;  
+    margin: 5vh 35vw;  
     text-align: center;
     border: 0.2rem solid black;
 
@@ -31,7 +31,13 @@ const Wrapper = styled.div`
     align-items: center;
     justify-content: flex-start;
 `;
-
+// 반응형 웹 고민중
+const Title = styled.div`
+  padding-top: 1rem;
+  font-size: 5em;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica
+      Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+`
 function SignIn() {
   const navigate = useNavigate();
   const handleSubmit = (event) => {
@@ -45,6 +51,7 @@ function SignIn() {
 
   return (
     <Wrapper>
+      <Title>Bitwise</Title>
       <LoginGoogle />
       <Link
         href="/Agree"
