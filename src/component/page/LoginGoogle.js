@@ -11,7 +11,7 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 // import { GoogleLogin } from '@react-oauth/google';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginButton } from "react-social-login-buttons";
-import {OAuth2Client} from "google-auth-library";
+// import {OAuth2Client} from "google-auth-library";
 
 
 
@@ -30,11 +30,11 @@ module.exports = (app) => {
 const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
 // 구글 oauth 클라이언트 id
 
-const oAuth2Client = new OAuth2Client(
+/* const oAuth2Client = new OAuth2Client(
   process.env.REACT_APP_GOOGLE_CLIENT_ID,
   process.env.REACT_APP_GOOGLE_SECRET_ID,
   'postmessage',
-);
+); */
 
 function LoginGoogle() {
   
@@ -51,12 +51,12 @@ function LoginGoogle() {
       try {
         console.log("codeResponse입니다.", codeResponse);
         console.log(codeResponse.code);
-        const { tokentest } = await oAuth2Client.getToken(codeResponse.code);
-        console.log(tokentest); 
+        // const { tokentest } = await oAuth2Client.getToken(codeResponse.code);
+        // console.log(tokentest); 
         // await는 async 함수 안에서만 사용가능
         const tokens = await axios.post(address + "/login",
           {
-            idToken: codeResponse,
+            idToken: codeResponse.code,
           }
         );
         console.log(tokens);
