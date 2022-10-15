@@ -20,11 +20,12 @@ import styled from "styled-components";
 
 
 const Wrapper = styled.div`
-    paddign: 1em;
+    padding: 1em;
     background: grey;
-    margin: 5vh 35vw;  
+    
+    
     text-align: center;
-    border: 0.2rem solid black;
+    
 
     display: flex;
     flex-direction: column; 
@@ -32,12 +33,21 @@ const Wrapper = styled.div`
     justify-content: flex-start;
 `;
 // 반응형 웹 고민중
+
+const Item = styled.div`
+    width: 35em;
+    margin: 5vh;
+    backgroud: green;
+    border: 0.2rem solid black;
+`
 const Title = styled.div`
   padding-top: 1rem;
   font-size: 5em;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica
       Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-`
+`;
+// min-width:
+// display: block; /* 브라우져 크기와 같이 자동조절 */ 
 function SignIn() {
   const navigate = useNavigate();
   const handleSubmit = (event) => {
@@ -51,17 +61,19 @@ function SignIn() {
 
   return (
     <Wrapper>
-      <Title>Bitwise</Title>
-      <LoginGoogle />
-      <Link
-        href="/Agree"
-        variant="body2"
-      /* onClick={() => {
-        navigate("/");
-      }} */
-      >
-        {"Don't have an account? Sign Up"}
-      </Link>
+      <Item>
+        <Title>Bitwise</Title>
+        <LoginGoogle />
+        <Link
+          href="/Agree"
+          variant="body2"
+        /* onClick={() => {
+          navigate("/");
+        }} */
+        >
+          {"Don't have an account? Sign Up"}
+        </Link>
+      </Item>
 
 
 
