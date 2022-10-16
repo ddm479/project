@@ -50,13 +50,14 @@ function LoginGoogle() {
     onSuccess: async (codeResponse) => {
       try {
         console.log("codeResponse입니다.", codeResponse);
-        console.log(codeResponse.code);
+        const code = codeResponse.code;
+        console.log("codeResponse.code입니다", code);
         // const { tokentest } = await oAuth2Client.getToken(codeResponse.code);
         // console.log(tokentest); 
         // await는 async 함수 안에서만 사용가능
         const tokens = await axios.post(address + "/login",
           {
-            idToken: codeResponse.code,
+            code,
           }
         );
         console.log(tokens);
