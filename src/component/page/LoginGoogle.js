@@ -41,11 +41,11 @@ function LoginGoogle() {
 
 
   const navigate = useNavigate();
-  const address = "http://ljlee-de.ddns.net:8080";
+  const address = "https://ljlee-de.ddns.net:8080";
   // "proxy": "http://ljlee-de.ddns.net:8080"
   const login = useGoogleLogin({
     flow: 'auth-code', // code 모델 방식
-    redirect_uri: "http://localhost:3000/Agree",
+    redirect_uri: "https://localhost:3000/Agree",
     // scope: "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
     onSuccess: async (codeResponse) => {
       try {
