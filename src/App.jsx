@@ -46,10 +46,9 @@ function App() {
               <Route index element={<SignIn />} />
               <Route path="Signup" element={<SignUp />} />
               <Route path="Agree" element={<Agree />} />
-              <Route path="Test" element={<Agree />} />
               <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
               <Route
-                path="/upload"
+                path="upload"
                 element={<PageLayout Article={ImageUploadPage} />}
               />
               <Route

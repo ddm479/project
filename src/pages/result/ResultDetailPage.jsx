@@ -5,9 +5,9 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import StopIcon from '@mui/icons-material/Stop';
-import koreaRoadSigns from '../jsonDataset/koreaRoadSigns.json';
-import sampleImageContents from '../jsonDataset/sampleImageContents.json';
-import sampleResults from '../jsonDataset/sampleResults.json';
+import koreaRoadSigns from '../../jsonDataset/koreaRoadSigns.json';
+import sampleImageContents from '../../jsonDataset/sampleImageContents.json';
+import sampleResults from '../../jsonDataset/sampleResults.json';
 
 const Wrapper = styled.div``;
 

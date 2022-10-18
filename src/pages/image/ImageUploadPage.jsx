@@ -3,8 +3,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import SendIcon from '@mui/icons-material/Send';
-import ImageUploadBox from '../components/upload/ImageUploadBox';
-import ImagesView from '../components/view/ImageListView';
+import ImageUploadBox from '../../components/upload/ImageUploadBox';
+import ImagesView from '../../components/view/ImageListView';
 
 const Wrapper = styled.div`
   display: flex;
