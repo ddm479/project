@@ -41,7 +41,7 @@ function LoginGoogle() {
 
 
   const navigate = useNavigate();
-  const address = "https://bitwise.ljlee37.com";
+  const address = "https://bitwise.ljlee37.com:8080";
   // "proxy": "http://ljlee-de.ddns.net:8080"
   const login = useGoogleLogin({
     flow: 'auth-code', // code 모델 방식
