@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { useParams } from 'react-router-dom';
 import { Typography } from '@mui/material';
-import sampleImageContents from '../jsonDataset/sampleDetailImageContents.json';
+import sampleImageContents from '../../jsonDataset/sampleDetailImageContents.json';
 
 const Wrapper = styled.div``;
 

@@ -11,8 +11,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import SearchIcon from '@mui/icons-material/Search';
-import ImagesView from '../components/view/ImageListView';
-import sampleImageContents from '../jsonDataset/sampleDetailImageContents.json';
+import ImagesView from '../../components/view/ImageListView';
+import sampleImageContents from '../../jsonDataset/sampleDetailImageContents.json';
 
 const Wrapper = styled.div``;
 
