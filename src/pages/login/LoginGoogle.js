@@ -46,7 +46,7 @@ function LoginGoogle() {
   const login = useGoogleLogin({
     flow: 'auth-code', // code 모델 방식
     redirect_uri: "https://localhost:3000/Agree",
-    // scope: "email profile openid https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email",
+    // scope: "email profile openid",
     onSuccess: async (codeResponse) => {
       try {
         console.log("codeResponse입니다.", codeResponse);
