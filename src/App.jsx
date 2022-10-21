@@ -5,6 +5,7 @@ import SignIn from "./pages/login/SignIn";
 import SignUp from "./pages/login/SignUp";
 import Agree from "./pages/login/Agree";
 import PrivacyPolicy from "./pages/login/PrivacyPolicy";
+import ServicePolicy from "./pages/login/ServicePolicy";
 
 import ImageUploadPage from "./pages/image/ImageUploadPage";
 import ImageUploadResultPage from "./pages/image/ImageUploadResultPage";
@@ -47,6 +48,7 @@ function App() {
               <Route path="Signup" element={<SignUp />} />
               <Route path="Agree" element={<Agree />} />
               <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
+              <Route path="ServicePolicy" element={<ServicePolicy />} />
               <Route
                 path="upload"
                 element={<PageLayout Article={ImageUploadPage} />}
