@@ -78,26 +78,25 @@ export default function SignUp() {
     password: "",
     showPassword: false,
   });
-  const onChangeId = (event) => {
-    setId(event.target.value);
-  }
-  const onChangeNick = (event) => {
-    setNickname(event.target.value);
-  }
-  const onChangeEmail = (event) => {
-    setEmail(event.target.value);
-  }
-  const onChangePassword = (event) => {
-    setPassword(event.target.value);
-  }
-  const onClickShowPasswd = () => {
-    setShowPassword(!showPassword);
-  }
 
+  // state값 변경
+  const onChangeId = (event) => { setId(event.target.value); }
+  const onChangeNick = (event) => { setNickname(event.target.value); }
+  const onChangeEmail = (event) => { setEmail(event.target.value); }
+  const onChangePassword = (event) => { setPassword(event.target.value); }
+  const onClickShowPasswd = () => { setShowPassword(!showPassword); }
+  // id 유효성 검사
   useEffect(() => {
-    if (id.length < 4 || id.length > 16) { }
+    const idReg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
+    if (!idReg.test(id)) {
+      setIdError("숫자, 영문자를 모두 사용해서 8-16글자의 아이디를 만드세요!");
+      setValId(false);
+    } else {
+      setIdError("");
+      setValId(true);
+    }
   }, [id]);
-
+  // 닉네임 유효성 검사
   useEffect(() => {
     if (nickname.length < 2 || nickname.length > 16) {
       setNicknameError(`닉네임은 2글자 이상 16글자 이하여야 합니다. 현재 글자 수: ${nickname.length}`);
@@ -107,14 +106,14 @@ export default function SignUp() {
       setValNick(true);
     }
   }, [nickname]);
-
+  // 이메일 유효성 검사
   useEffect(() => {
-    // naver.com
+    // ex) naver.com
     const emailReg1 =
-      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
+      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{3}$/;
 
     const emailReg2 =
-      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,2}[.]{1}[A-Za-z]{1,2}$/; // seoul.ac.kr
+      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,2}[.]{1}[A-Za-z]{2}$/; // ex) seoul.ac.kr
 
     if (!emailReg1.test(email) && !emailReg2.test(email)) {
       // setEmailError("이메일의 형태가 아닙니다.");
@@ -124,7 +123,7 @@ export default function SignUp() {
       setValEmail(true);
     }
   }, [email]);
-
+  // 비번 유효성 검사
   useEffect(() => {
     const passwordReg =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*?+=-])(?=.*[0-9]).{10,16}$/;
@@ -157,7 +156,7 @@ export default function SignUp() {
   }; */
   // https://phrygia.github.io/react/2021-11-25-mui-react/
 
-  
+
 
   /* const onChange = e => {
         const { name, value } = e.target;
@@ -187,7 +186,7 @@ export default function SignUp() {
     });
   }; */
 
-  
+
 
   const config = { headers: { "Content-Type": "application/json" } };
   const register = (e) => {
@@ -267,7 +266,8 @@ export default function SignUp() {
                   fullWidth
                   id="id"
                   label="ID" // 버튼 위에 뜨는 내용
-                  helperText="Incorrect entry." // 버튼 밑에 뜨는 내용
+                  helperText={idError} // 버튼 밑에 뜨는 내용
+                  error={!valId}
                   value={id}
                   onChange={onChangeId}
                   autoFocus
