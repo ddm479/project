@@ -50,16 +50,20 @@ const theme = createTheme();
 // ThemeProvider 안의 theme attribute 값으로 위에서 만들었던 테마를 연결하면 css에 적용된다.
 
 export default function SignUp() {
+  // 입력 값 state변수에 
   const [id, setId] = useState("");
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
+  // 에러 메세지
+  const [idError, setIdError] = useState("");
   const [nicknameError, setNicknameError] = useState("");
-  const [emailError, setEmailError] = useState("");
+  // const [emailError, setEmailError] = useState(""); 안씀
   const [passwordError, setPasswordError] = useState("");
 
+  // 유효성 체크
   const [valId, setValId] = useState(false);
   const [valNick, setValNick] = useState(false);
   const [valEmail, setValEmail] = useState(false);
@@ -96,7 +100,7 @@ export default function SignUp() {
 
   useEffect(() => {
     if (nickname.length < 2 || nickname.length > 16) {
-      setNicknameError("닉네임은 2글자 이상 16글자 이하여야 합니다.");
+      setNicknameError(`닉네임은 2글자 이상 16글자 이하여야 합니다. 현재 글자 수: ${nickname.length}`);
       setValNick(false);
     } else {
       setNicknameError("");
@@ -105,16 +109,39 @@ export default function SignUp() {
   }, [nickname]);
 
   useEffect(() => {
+    // naver.com
+    const emailReg1 =
+      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,3}$/;
 
+    const emailReg2 =
+      /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,2}[.]{1}[A-Za-z]{1,2}$/; // seoul.ac.kr
+
+    if (!emailReg1.test(email) && !emailReg2.test(email)) {
+      // setEmailError("이메일의 형태가 아닙니다.");
+      setValEmail(false);
+    } else {
+      // setEmailError("");
+      setValEmail(true);
+    }
   }, [email]);
 
   useEffect(() => {
-
+    const passwordReg =
+      /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*?+=-])(?=.*[0-9]).{10,16}$/;
+    if (!passwordReg.test(password)) {
+      setPasswordError(
+        "숫자, 영문자, 특수문자를 모두 사용해서 10~16글자의 비밀번호를 만드세요!"
+      );
+      setValPasswd(false);
+    } else {
+      setPasswordError("");
+      setValPasswd(true);
+    }
   }, [password]);
 
 
 
-  const ChangePassword = (event) => { // 현재 password만 따로 처리해봄
+  /* const ChangePassword = (event) => { // 현재 password만 따로 처리해봄
     event.preventDefault();
     setPassword(event.target.value);
     console.log(values, event.target.name, event.target.value, password);
@@ -127,21 +154,10 @@ export default function SignUp() {
         "숫자, 영문자, 특수문자 세 가지 모두를 사용해서 8자리 이상 입력하세요."
       );
     else setPasswordError("");
-  };
+  }; */
   // https://phrygia.github.io/react/2021-11-25-mui-react/
 
-  /* const handleChange = (event) => {
-    setValues({ ...values, [event.target.name]: event.target.value }); // ...는 객체에 속한 값만 들고오게 한다., spread operator
-
-    // state를 한 번에 관리하면 값이 느리게 바뀜 -> 유효성 검사 한다면 훅 사용해보자
-    console.log(values, event.target.name, event.target.value);
-    // 이메일 유효성 체크
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-    if (!emailRegex.test(values.email))
-      setEmailError("올바른 이메일 형식이 아닙니다.");
-    else setEmailError("");
-  }; */
+  
 
   /* const onChange = e => {
         const { name, value } = e.target;
@@ -171,11 +187,7 @@ export default function SignUp() {
     });
   }; */
 
-  /* const register = () => {
-    fetch("ljlee-de.ddns.net:8080")
-      .then((res) => res.json())
-      ;
-  }; */
+  
 
   const config = { headers: { "Content-Type": "application/json" } };
   const register = (e) => {
@@ -283,18 +295,19 @@ export default function SignUp() {
                   fullWidth
                   id="email"
                   label="Email Address"
-                  helperText="ex) gachon@google.com"
+                  helperText={valEmail ? "" : "ex) bitwise123@naver.com or react123@bitwise.ac.kr"}
                   name="email"
-                  error={emailError !== "" || false}
+                  // error={emailError !== "" || false}
+                  error={!valEmail}
                   autoComplete="email"
                   value={email}
                   onChange={onChangeEmail}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControl>
+                <FormControl fullWidth>
                   <InputLabel htmlFor="outlined-adornment-password">
-                    Pass word
+                    Password
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
@@ -303,7 +316,8 @@ export default function SignUp() {
                     label="Password"
                     name="password"
                     value={password}
-                    error={passwordError !== "" || false}
+                    helperText={passwordError} // 버튼 밑에 뜨는 내용
+                    error={!valPasswd}
                     onChange={onChangePassword}
                     endAdornment={
                       <InputAdornment position="end">
