@@ -48,7 +48,7 @@ const theme = createTheme();
 // createTheme({}) {} 내부에 만들고 싶은 테마 style을 작성.(여러개를 만들어도 됨)
 // theme(변수명은 수정)이라는 변수에 할당한다.
 // ThemeProvider 안의 theme attribute 값으로 위에서 만들었던 테마를 연결하면 css에 적용된다.
-
+const address = "https://bitwise.ljlee37.com:8080";
 export default function SignUp() {
   // 입력 값 state변수에 
   const [id, setId] = useState("");
@@ -148,11 +148,7 @@ export default function SignUp() {
     // 비밀번호 유효성 체크
     const passwordRegex =
       /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    if (!passwordRegex.test(password))
-      setPasswordError(
-        "숫자, 영문자, 특수문자 세 가지 모두를 사용해서 8자리 이상 입력하세요."
-      );
-    else setPasswordError("");
+    
   }; */
   // https://phrygia.github.io/react/2021-11-25-mui-react/
 
@@ -185,11 +181,24 @@ export default function SignUp() {
       password: data.get("password"),
     });
   }; */
-
-
-
-  const config = { headers: { "Content-Type": "application/json" } };
-  const register = (e) => {
+  const onSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      // await는 async 함수 안에서만 사용가능
+      const tokens = await axios.post(address + "/login",
+        {
+          id: id,
+          nickname: nickname,
+          email: email,
+          password: password,
+        }
+      );
+      console.log(tokens);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  /* const register = (e) => {
     e.preventDefault(); // 새로고침 방지
 
     axios
@@ -215,9 +224,7 @@ export default function SignUp() {
         // Handle error.
         console.log("An error occurred:", error.response);
       });
-
-
-  };
+  }; */
 
   /* const handleSubmit = async () => {
         await axios.post('/api/createUser', values)
@@ -228,11 +235,7 @@ export default function SignUp() {
             console.log("통신 실패 + \n" + Error)
         })
     }; */
-  /* const sighUp = async () => {
-        const result = await createUserWithEmailAndPassword(auth, email, password);
-        console.log(result);
-    } */
-
+  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" >
@@ -379,7 +382,7 @@ export default function SignUp() {
               type="submit"
               fullWidth
               variant="contained"
-              onClick={register}
+              onClick={onSubmit}
               sx={{ mt: 3, mb: 2 }}
             >
               Sign Up
