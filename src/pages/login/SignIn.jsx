@@ -14,6 +14,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography"; // 텍스트 font를 지정할수 있게함
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import axios from "axios";
+
 import GoogleLogin from "./GoogleLogin";
 // import GoogleLogin from "react-google-login";
 
@@ -68,13 +70,26 @@ const theme = createTheme();
 
 function SignIn() {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const address = "https://bitwise.ljlee37.com:8080";
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     console.log({
       email: data.get("email"),
       password: data.get("password"),
     });
+    try {
+      // await는 async 함수 안에서만 사용가능
+      const tokens = await axios.post(address + "/login",
+        {
+          email: data.get("email"),
+          password: data.get("password"),
+        }
+      );
+      console.log(tokens);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -129,10 +144,7 @@ function SignIn() {
               id="password"
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me" // label 값을 클릭해도 체크됨
-            />
+
             <Button
               type="submit"
               fullWidth
@@ -141,15 +153,15 @@ function SignIn() {
             >
               Sign In
             </Button>
-            <GoogleLogin/>
+
             <Grid container /* container가 있는게 행*/>
               <Grid item>
                 <Link
                   href="/Signup"
                   variant="body2"
-                  /* onClick={() => {
-                    navigate("/");
-                  }} */
+                /* onClick={() => {
+                  navigate("/");
+                }} */
                 >
                   {"Don't have an account? Sign Up"}
                 </Link>

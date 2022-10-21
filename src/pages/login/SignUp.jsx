@@ -50,9 +50,20 @@ const theme = createTheme();
 // ThemeProvider 안의 theme attribute 값으로 위에서 만들었던 테마를 연결하면 css에 적용된다.
 
 export default function SignUp() {
+  const [id, setId] = useState("");
   const [nickname, setNickname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  const [nicknameError, setNicknameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const [valId, setValId] = useState(false);
+  const [valNick, setValNick] = useState(false);
+  const [valEmail, setValEmail] = useState(false);
+  const [valPasswd, setValPasswd] = useState(false);
   // const auth = getAuth();
 
   const navigate = useNavigate();
@@ -63,10 +74,45 @@ export default function SignUp() {
     password: "",
     showPassword: false,
   });
+  const onChangeId = (event) => {
+    setId(event.target.value);
+  }
+  const onChangeNick = (event) => {
+    setNickname(event.target.value);
+  }
+  const onChangeEmail = (event) => {
+    setEmail(event.target.value);
+  }
+  const onChangePassword = (event) => {
+    setPassword(event.target.value);
+  }
+  const onClickShowPasswd = () => {
+    setShowPassword(!showPassword);
+  }
 
-  const [nicknameError, setNicknameError] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [passwordError, setPasswordError] = useState("");
+  useEffect(() => {
+    if (id.length < 4 || id.length > 16) { }
+  }, [id]);
+
+  useEffect(() => {
+    if (nickname.length < 2 || nickname.length > 16) {
+      setNicknameError("닉네임은 2글자 이상 16글자 이하여야 합니다.");
+      setValNick(false);
+    } else {
+      setNicknameError("");
+      setValNick(true);
+    }
+  }, [nickname]);
+
+  useEffect(() => {
+
+  }, [email]);
+
+  useEffect(() => {
+
+  }, [password]);
+
+
 
   const ChangePassword = (event) => { // 현재 password만 따로 처리해봄
     event.preventDefault();
@@ -83,7 +129,8 @@ export default function SignUp() {
     else setPasswordError("");
   };
   // https://phrygia.github.io/react/2021-11-25-mui-react/
-  const handleChange = (event) => {
+
+  /* const handleChange = (event) => {
     setValues({ ...values, [event.target.name]: event.target.value }); // ...는 객체에 속한 값만 들고오게 한다., spread operator
 
     // state를 한 번에 관리하면 값이 느리게 바뀜 -> 유효성 검사 한다면 훅 사용해보자
@@ -94,7 +141,7 @@ export default function SignUp() {
     if (!emailRegex.test(values.email))
       setEmailError("올바른 이메일 형식이 아닙니다.");
     else setEmailError("");
-  };
+  }; */
 
   /* const onChange = e => {
         const { name, value } = e.target;
@@ -104,12 +151,12 @@ export default function SignUp() {
         });
     }; */
 
-  const handleClickShowPassword = () => {
+  /* const handleClickShowPassword = () => {
     setValues({
       ...values,
       showPassword: !values.showPassword,
     });
-  };
+  }; */
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
@@ -133,6 +180,7 @@ export default function SignUp() {
   const config = { headers: { "Content-Type": "application/json" } };
   const register = (e) => {
     e.preventDefault(); // 새로고침 방지
+
     axios
       .post(
         "https://ljlee-de.ddns.net:8080",
@@ -156,6 +204,8 @@ export default function SignUp() {
         // Handle error.
         console.log("An error occurred:", error.response);
       });
+
+
   };
 
   /* const handleSubmit = async () => {
@@ -199,16 +249,31 @@ export default function SignUp() {
             <Grid container spacing={2} /*레이아웃을 결정하는 property*/>
               <Grid item xs={12}>
                 <TextField
+                  autoComplete="given-id"
+                  name="ID"
+                  required // 필수
+                  fullWidth
+                  id="id"
+                  label="ID" // 버튼 위에 뜨는 내용
+                  helperText="Incorrect entry." // 버튼 밑에 뜨는 내용
+                  value={id}
+                  onChange={onChangeId}
+                  autoFocus
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   autoComplete="given-nickname"
                   name="nickname"
                   required // 필수
                   fullWidth
                   id="nickname"
                   label="Nick Name" // 버튼 위에 뜨는 내용
-                  helperText="Incorrect entry." // 버튼 밑에 뜨는 내용
-                  value={values.nickname}
-                  onChange={handleChange}
-                  autoFocus
+                  helperText={nicknameError} // 버튼 밑에 뜨는 내용
+                  error={!valNick} // true일 때 빨간색
+                  value={nickname}
+                  onChange={onChangeNick}
+
                 />
               </Grid>
 
@@ -222,8 +287,8 @@ export default function SignUp() {
                   name="email"
                   error={emailError !== "" || false}
                   autoComplete="email"
-                  value={values.email}
-                  onChange={handleChange}
+                  value={email}
+                  onChange={onChangeEmail}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -233,22 +298,22 @@ export default function SignUp() {
                   </InputLabel>
                   <OutlinedInput
                     id="outlined-adornment-password"
-                    type={values.showPassword ? "text" : "password"}
+                    type={showPassword ? "text" : "password"}
                     required
                     label="Password"
                     name="password"
                     value={password}
                     error={passwordError !== "" || false}
-                    onChange={ChangePassword}
+                    onChange={onChangePassword}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
                           aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
+                          onClick={onClickShowPasswd}
                           onMouseDown={handleMouseDownPassword}
                           edge="end"
                         >
-                          {values.showPassword ? (
+                          {showPassword ? (
                             <VisibilityOff />
                           ) : (
                             <Visibility />
