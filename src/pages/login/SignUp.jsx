@@ -21,7 +21,6 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
-// import crypto from 'crypto-js';
 import crypto from 'crypto';
 
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // 신규 사용자 가입
@@ -189,20 +188,47 @@ export default function SignUp() {
     if (valId && valNick && valEmail && valPasswd) {
       const hashpasswd = crypto.createHash('sha256').update(password).digest('base64');
       console.log(hashpasswd);
-      /* try {
+      try {
         // await는 async 함수 안에서만 사용가능
-        const tokens = axios.post(address + "/register",
+        const uniqueEmail= axios.post(address + "/checkDuplicated/email",
           {
-            user_id: id,
-            nickname: nickname,
             email: email,
-            password: hashpasswd,
           }
         );
-        console.log(tokens);
+        console.log(uniqueEmail, "uniqueEmail");
+        const uniqueNick= axios.post(address + "/checkDuplicated/nickname",
+          {
+            nickname: nickname,
+          }
+        );
+        console.log(uniqueNick, "uniqueNick");
+        const uniqueId= axios.post(address + "/checkDuplicated/user_id",
+          {
+            user_id: id,
+          }
+        );
+        console.log(uniqueId, "uniqueId");
+        if (uniqueEmail && uniqueId && uniqueNick) {
+          const response = axios.post(address + "/register",
+            {
+              user_id: id,
+              nickname: nickname,
+              email: email,
+              password: hashpasswd,
+            }
+          );
+          console.log(response, "가입성공");
+        } else {
+          alert("다시");
+          console.log("다시");
+        }
+        
       } catch (error) {
-        console.error(error);
-      } */
+        console.error("console.error(error);", error);
+        console.log("console.log(error)", error);
+        alert("에러 발생!");
+        
+      }
     } else{ alert(`다시 작성해주세요!`);}
   }
   /* const register = (e) => {
@@ -314,7 +340,7 @@ export default function SignUp() {
                   onChange={onChangeEmail}
                 />
               </Grid>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <FormControl fullWidth>
                   <InputLabel htmlFor="outlined-adornment-password">
                     Password
@@ -347,31 +373,37 @@ export default function SignUp() {
                     }
                   />
                 </FormControl>
+              </Grid> */}
+              <Grid item xs={12}>
+                <TextField // input에 해당함
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  value={password}
+                  helperText={passwordError} // 버튼 밑에 뜨는 내용
+                  error={!valPasswd}
+                  onChange={onChangePassword}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={onClickShowPasswd}
+                        onMouseDown={handleMouseDownPassword}
+                        edge="end"
+                      >
+                        {showPassword ? (
+                          <VisibilityOff />
+                        ) : (
+                          <Visibility />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
               </Grid>
-              {/* <Grid item xs={12}>
-                                <TextField // input에 해당함
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Password"
-                                    id="password"
-                                    type={values.showPassword ? 'text' : 'password'}
-                                    value={values.password}
-                                    onChange={handleChange('password')}
-                                    endAdornment={
-                                        <InputAdornment position="end">
-                                            <IconButton
-                                                aria-label="toggle password visibility"
-                                                onClick={handleClickShowPassword}
-                                                onMouseDown={handleMouseDownPassword}
-                                                edge="end"
-                                            >
-                                                {values.showPassword ? <VisibilityOff /> : <Visibility />}
-                                            </IconButton>
-                                        </InputAdornment>
-                                    }
-                                />
-                            </Grid> */}
               <Grid xs={12}>
                 <Link
                   href="/Agree"></Link>
