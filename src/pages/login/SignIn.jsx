@@ -15,39 +15,11 @@ import Typography from "@mui/material/Typography"; // 텍스트 font를 지정�
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
+import crypto from 'crypto';
 
 import GoogleLogin from "./GoogleLogin";
 // import GoogleLogin from "react-google-login";
 
-const Wrapper = styled.div`
-    padding: 1em;
-    background: grey;
-    
-    
-    text-align: center;
-    
-
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: flex-start;
-`;
-// 반응형 웹 고민중
-
-const Item = styled.div`
-    width: 35em;
-    margin: 5vh;
-    backgroud: green;
-    border: 0.2rem solid black;
-`
-const Title = styled.div`
-  padding-top: 1rem;
-  font-size: 5em;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica
-      Neue, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-`;
-// min-width:
-// display: block; /* 브라우져 크기와 같이 자동조절 */ 
 function Copyright(props) {
   return (
     <Typography
@@ -74,19 +46,20 @@ function SignIn() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+    const hashpasswd = crypto.createHash('sha256').update(data.get("password")).digest('base64');
     console.log({
-      email: data.get("email"),
+      id: data.get("id"),
       password: data.get("password"),
     });
     try {
       // await는 async 함수 안에서만 사용가능
-      const tokens = await axios.post(address + "/login",
+      const response = await axios.post(address + "/login",
         {
           user_id: data.get("id"),
-          password: data.get("password"),
+          password: hashpasswd,
         }
       );
-      console.log(tokens);
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
