@@ -21,6 +21,9 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
+// import crypto from 'crypto-js';
+import crypto from 'crypto';
+
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // 신규 사용자 가입
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
@@ -181,22 +184,26 @@ export default function SignUp() {
       password: data.get("password"),
     });
   }; */
-  const onSubmit = async(e) => {
-    e.preventDefault();
-    try {
-      // await는 async 함수 안에서만 사용가능
-      const tokens = await axios.post(address + "/login",
-        {
-          id: id,
-          nickname: nickname,
-          email: email,
-          password: password,
-        }
-      );
-      console.log(tokens);
-    } catch (error) {
-      console.error(error);
-    }
+  const onSubmit = (e) => {
+    e.preventDefault(); // 입력 값 사라지는거 방지
+    if (valId && valNick && valEmail && valPasswd) {
+      const hashpasswd = crypto.createHash('sha256').update(password).digest('base64');
+      console.log(hashpasswd);
+      /* try {
+        // await는 async 함수 안에서만 사용가능
+        const tokens = axios.post(address + "/register",
+          {
+            user_id: id,
+            nickname: nickname,
+            email: email,
+            password: hashpasswd,
+          }
+        );
+        console.log(tokens);
+      } catch (error) {
+        console.error(error);
+      } */
+    } else{ alert(`다시 작성해주세요!`);}
   }
   /* const register = (e) => {
     e.preventDefault(); // 새로고침 방지

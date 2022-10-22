@@ -82,7 +82,7 @@ function SignIn() {
       // await는 async 함수 안에서만 사용가능
       const tokens = await axios.post(address + "/login",
         {
-          email: data.get("email"),
+          user_id: data.get("id"),
           password: data.get("password"),
         }
       );
@@ -128,10 +128,10 @@ function SignIn() {
               margin="normal"
               required // 필수 입력
               fullWidth
-              id="email"
-              label="Email Address" // 보이는 내용
-              name="email"
-              autoComplete="email"
+              id="id"
+              label="ID" // 보이는 내용
+              name="id"
+              autoComplete="id"
               autoFocus // 처음에 자동으로 커서 이동
             />
             <TextField
