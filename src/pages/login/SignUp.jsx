@@ -62,7 +62,7 @@ export default function SignUp() {
   // 에러 메세지
   const [idError, setIdError] = useState("");
   const [nicknameError, setNicknameError] = useState("");
-  // const [emailError, setEmailError] = useState(""); 안씀
+  const [emailError, setEmailError] = useState(""); 
   const [passwordError, setPasswordError] = useState("");
 
   // 유효성 체크
@@ -118,10 +118,10 @@ export default function SignUp() {
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,2}[.]{1}[A-Za-z]{2}$/; // ex) seoul.ac.kr
 
     if (!emailReg1.test(email) && !emailReg2.test(email)) {
-      // setEmailError("이메일의 형태가 아닙니다.");
+      setEmailError("ex) bitwise123@naver.com or react123@bitwise.ac.kr");
       setValEmail(false);
     } else {
-      // setEmailError("");
+      setEmailError("");
       setValEmail(true);
     }
   }, [email]);
@@ -183,33 +183,53 @@ export default function SignUp() {
       password: data.get("password"),
     });
   }; */
-  const onSubmit = (e) => {
+  const onSubmit = async(e) => {
     e.preventDefault(); // 입력 값 사라지는거 방지
     if (valId && valNick && valEmail && valPasswd) {
       const hashpasswd = crypto.createHash('sha256').update(password).digest('base64');
       console.log(hashpasswd);
       try {
-        // await는 async 함수 안에서만 사용가능
-        const uniqueEmail= axios.post(address + "/checkDuplicated/email",
+        // db에 있는 데이터와 중복체크 먼저
+        const responseEmail= await axios.post(address + "/checkDuplicated/email",
           {
             email: email,
           }
         );
-        console.log(uniqueEmail, "uniqueEmail");
-        const uniqueNick= axios.post(address + "/checkDuplicated/nickname",
+        console.log(responseEmail, responseEmail.data, "uniqueEmail");
+        const uniqueEmail = !responseEmail.data.isDuplicated;
+        if(!uniqueEmail){ 
+          // alert(`중복된 이메일`);
+          setEmailError("중복된 이메일입니다. 새로운 이메일을 입력해주세요!");
+          setValEmail(false);
+        }
+
+        const responseNick= await axios.post(address + "/checkDuplicated/nickname",
           {
             nickname: nickname,
           }
         );
-        console.log(uniqueNick, "uniqueNick");
-        const uniqueId= axios.post(address + "/checkDuplicated/user_id",
+        console.log(responseNick, responseNick.data, "uniqueNick");
+        const uniqueNick = !responseNick.data.isDuplicated;
+        if(!uniqueNick){ 
+          setNicknameError("중복된 닉네임입니다!");
+          setValNick(false);
+        }
+
+        const responseId= await axios.post(address + "/checkDuplicated/user_id",
           {
             user_id: id,
           }
         );
-        console.log(uniqueId, "uniqueId");
-        if (uniqueEmail && uniqueId && uniqueNick) {
-          const response = axios.post(address + "/register",
+        console.log(responseId, responseId.data, "uniqueId");
+        const uniqueId = !responseId.data.isDuplicated;
+        if (!uniqueId) {
+          setIdError("중복된 아이디입니다!");
+          setValId(false);
+        }
+        
+        // db에 중복된 데이터가 없으면 db에 가입정보 전송
+        if (uniqueEmail && uniqueNick && uniqueId) {
+          const response = await axios.post(address + "/register",
             {
               user_id: id,
               nickname: nickname,
@@ -218,18 +238,19 @@ export default function SignUp() {
             }
           );
           console.log(response, "가입성공");
+          navigate("/");
         } else {
-          alert("다시");
-          console.log("다시");
+          alert("이미 있는 계정의 정보입니다. ");
+          console.log("이미 있는 계정의 정보입니다.");
         }
         
       } catch (error) {
         console.error("console.error(error);", error);
         console.log("console.log(error)", error);
-        alert("에러 발생!");
+        alert(error, "에러 발생!");
         
       }
-    } else{ alert(`다시 작성해주세요!`);}
+    } else{ alert(`규격에 맞게 작성해주세요!`);}
   }
   /* const register = (e) => {
     e.preventDefault(); // 새로고침 방지
@@ -285,7 +306,7 @@ export default function SignUp() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Bitwise
           </Typography>
           <Box
             component="form"
@@ -331,7 +352,7 @@ export default function SignUp() {
                   fullWidth
                   id="email"
                   label="Email Address"
-                  helperText={valEmail ? "" : "ex) bitwise123@naver.com or react123@bitwise.ac.kr"}
+                  helperText={emailError}
                   name="email"
                   // error={emailError !== "" || false}
                   error={!valEmail}
@@ -424,7 +445,7 @@ export default function SignUp() {
               onClick={onSubmit}
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign Up
+              가입하기
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
@@ -435,7 +456,7 @@ export default function SignUp() {
                   navigate("/SignIn");
                 }} */
                 >
-                  Already have an account? Sign in
+                  계정이 있으신가요? 로그인 하러가기
                 </Link>
               </Grid>
             </Grid>
