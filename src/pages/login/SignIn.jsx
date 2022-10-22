@@ -60,8 +60,16 @@ function SignIn() {
         }
       );
       console.log(response);
+      console.log(response.data);
+      const isLogin = response.data.loginSuccess;
+      if(isLogin){ 
+        alert("로그인 성공");
+        navigate("/upload");
+      }
+      else{alert("로그인 실패");}
     } catch (error) {
       console.error(error);
+      alert("로그인 실패!");
     }
   };
 
@@ -89,7 +97,7 @@ function SignIn() {
             component="h1"
             variant="h5" /* h1 태그로 감싼다 디자인은 h5 태그, 텍스트 설정을 해줄 수 있는 컴포넌트 */
           >
-            Sign in
+            Bitwise
           </Typography>
           <Box
             component="form"
@@ -124,7 +132,7 @@ function SignIn() {
               variant="contained" // 모양 결정, 색이꽉찬
               sx={{ mt: 3, mb: 2 }} // 간단한 css, margintop, bottom
             >
-              Sign In
+              로그인
             </Button>
 
             <Grid container /* container가 있는게 행*/>
@@ -136,7 +144,7 @@ function SignIn() {
                   navigate("/");
                 }} */
                 >
-                  {"Don't have an account? Sign Up"}
+                  {"계정이 없으신가요? 회원가입 하러 가기"}
                 </Link>
               </Grid>
             </Grid>
