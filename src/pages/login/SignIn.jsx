@@ -61,9 +61,11 @@ function SignIn() {
       );
       console.log(response);
       console.log(response.data);
+      // console.log(response.json());
       const isLogin = response.data.loginSuccess;
+      // if (response.data.description !== undefinded)
       if(isLogin){ 
-        alert("로그인 성공");
+        // alert("로그인 성공");
         navigate("/upload");
       }
       else{alert("로그인 실패");}

@@ -118,7 +118,7 @@ export default function SignUp() {
       /^[A-Za-z0-9_]+[A-Za-z0-9]*[@]{1}[A-Za-z0-9]+[A-Za-z0-9]*[.]{1}[A-Za-z]{1,2}[.]{1}[A-Za-z]{2}$/; // ex) seoul.ac.kr
 
     if (!emailReg1.test(email) && !emailReg2.test(email)) {
-      setEmailError("ex) bitwise123@naver.com or react123@bitwise.ac.kr");
+      setEmailError("ex) bitwise123@naver.com 또는 react123@bitwise.ac.kr");
       setValEmail(false);
     } else {
       setEmailError("");
@@ -195,7 +195,7 @@ export default function SignUp() {
             email: email,
           }
         );
-        console.log(responseEmail, responseEmail.data, "uniqueEmail");
+        console.log(responseEmail, responseEmail.data, "isDuplicatedEmail");
         const uniqueEmail = !responseEmail.data.isDuplicated;
         if(!uniqueEmail){ 
           // alert(`중복된 이메일`);
@@ -208,7 +208,7 @@ export default function SignUp() {
             nickname: nickname,
           }
         );
-        console.log(responseNick, responseNick.data, "uniqueNick");
+        console.log(responseNick, responseNick.data, "isDuplicatedNick");
         const uniqueNick = !responseNick.data.isDuplicated;
         if(!uniqueNick){ 
           setNicknameError("중복된 닉네임입니다!");
@@ -220,7 +220,7 @@ export default function SignUp() {
             user_id: id,
           }
         );
-        console.log(responseId, responseId.data, "uniqueId");
+        console.log(responseId, responseId.data, "isDuplicatedId");
         const uniqueId = !responseId.data.isDuplicated;
         if (!uniqueId) {
           setIdError("중복된 아이디입니다!");
@@ -241,7 +241,7 @@ export default function SignUp() {
           navigate("/");
         } else {
           alert("이미 있는 계정의 정보입니다. ");
-          console.log("이미 있는 계정의 정보입니다.");
+          console.log("이미 있는 계정의 정보입니다."); 
         }
         
       } catch (error) {
