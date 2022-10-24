@@ -16,6 +16,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import crypto from 'crypto';
+import { useCookies } from 'react-cookie';
 
 import GoogleLogin from "./GoogleLogin";
 // import GoogleLogin from "react-google-login";
@@ -42,6 +43,7 @@ const theme = createTheme();
 
 function SignIn() {
   const navigate = useNavigate();
+  const [cookies, setCookie] = useCookies(['id']); // 쿠키 훅 
   const address = "https://bitwise.ljlee37.com:8080";
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -62,6 +64,7 @@ function SignIn() {
       );
       console.log(response);
       console.log(response.data);
+      setCookie('id', response.data.token);// 쿠키에 토큰 저장
       // console.log(response.json());
       const isLogin = response.data.loginSuccess;
       // if (response.data.description !== undefinded)
