@@ -32,9 +32,13 @@ function PageLayout({ Article }) {
     const onLogoutClick = async () => {
         try {
             // await는 async 함수 안에서만 사용가능
-            const checkLogin = await axios.get(address + "/checkLogin");
-            console.log(checkLogin, checkLogin.data);
-            const response = await axios.get(address + "/logout");
+            //const checkLogin = await axios.get(address + "/checkLogin");
+            //console.log(checkLogin, checkLogin.data);
+            //const sess = await axios.get(address + "/session");
+            //console.log(sess, sess.data);
+            const response = await axios.get(address + "/logout",
+                { withCredentials: true }
+            );
             console.log(response, response.data);
         } catch (error) {
             console.error("console.error(error);", error);

@@ -45,7 +45,7 @@ function SignIn() {
   const address = "https://bitwise.ljlee37.com:8080";
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const data = new FormData(event.currentTarget); 
     const hashpasswd = crypto.createHash('sha256').update(data.get("password")).digest('base64');
     console.log({
       id: data.get("id"),
@@ -57,7 +57,8 @@ function SignIn() {
         {
           user_id: data.get("id"),
           password: hashpasswd,
-        }
+        },
+        {withCredentials: true} // 쿠키 cors 통신 설정, 서버도 같이 처리해줘야함
       );
       console.log(response);
       console.log(response.data);
