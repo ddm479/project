@@ -38,11 +38,9 @@ function App() {
 
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        <HelmetProvider>
+        
           <>
-            {/*<Helmet>
-            <meta name="google-signin-client_id" content="1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com" />
-          </Helmet> */}
+            
 
             <Routes>
               <Route index element={<SignIn />} />
@@ -79,7 +77,7 @@ function App() {
               />
             </Routes>
           </>
-        </HelmetProvider>
+        
       </ThemeProvider>
     </BrowserRouter >
   );
