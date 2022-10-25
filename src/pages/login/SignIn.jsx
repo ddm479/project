@@ -18,26 +18,7 @@ import axios from "axios";
 import crypto from 'crypto';
 import { useCookies } from 'react-cookie';
 
-import GoogleLogin from "./GoogleLogin";
-// import GoogleLogin from "react-google-login";
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const theme = createTheme();
 
@@ -76,7 +57,7 @@ function SignIn() {
         // alert("로그인 성공");
         alert(document.cookie);
         console.log(document.cookie);
-        navigate("/upload");
+        navigate("/images");
       }
       else{alert("로그인 실패");}
     } catch (error) {
@@ -162,7 +143,7 @@ function SignIn() {
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        
       </Container>
     </ThemeProvider>
   );
