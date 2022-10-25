@@ -63,7 +63,8 @@ function PageLayout({ Article }) {
             //const sess = await axios.get(address + "/session");
             //console.log(sess, sess.data);
             const response = await axios.get(address + "/logout",
-                { withCredentials: true }
+                { withCredentials: true },
+                {},
             );
             console.log(response, response.data);
         } catch (error) {

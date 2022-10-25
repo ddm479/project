@@ -43,7 +43,7 @@ const theme = createTheme();
 
 function SignIn() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(['id']); // 쿠키 훅 
+  const [cookies, setCookie] = useCookies(['user_id']); // 쿠키 훅 
   const address = "https://bitwise.ljlee37.com:8080";
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -64,12 +64,18 @@ function SignIn() {
       );
       console.log(response);
       console.log(response.data);
-      setCookie('id', response.data.token);// 쿠키에 토큰 저장
+      console.log(cookies);
+      console.log(cookies.id);
+      console.log(cookies.user_id);
+      // setCookie('user_id', cookies.id);// 쿠키에 토큰 저장
+      // console.log(cookies);
       // console.log(response.json());
       const isLogin = response.data.loginSuccess;
       // if (response.data.description !== undefinded)
       if(isLogin){ 
         // alert("로그인 성공");
+        alert(document.cookie);
+        console.log(document.cookie);
         navigate("/upload");
       }
       else{alert("로그인 실패");}
