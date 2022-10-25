@@ -23,35 +23,11 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import axios from "axios";
 import crypto from 'crypto';
 
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"; // 신규 사용자 가입
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.9.4/firebase-analytics.js";
-
-/* function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-} */
-
 const theme = createTheme();
-// createTheme({}) {} 내부에 만들고 싶은 테마 style을 작성.(여러개를 만들어도 됨)
-// theme(변수명은 수정)이라는 변수에 할당한다.
-// ThemeProvider 안의 theme attribute 값으로 위에서 만들었던 테마를 연결하면 css에 적용된다.
 const address = "https://bitwise.ljlee37.com:8080";
+
 export default function SignUp() {
+  const navigate = useNavigate();
   // 입력 값 state변수에 
   const [id, setId] = useState("");
   const [nickname, setNickname] = useState("");
@@ -62,7 +38,7 @@ export default function SignUp() {
   // 에러 메세지
   const [idError, setIdError] = useState("");
   const [nicknameError, setNicknameError] = useState("");
-  const [emailError, setEmailError] = useState(""); 
+  const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
   // 유효성 체크
@@ -70,16 +46,6 @@ export default function SignUp() {
   const [valNick, setValNick] = useState(false);
   const [valEmail, setValEmail] = useState(false);
   const [valPasswd, setValPasswd] = useState(false);
-  // const auth = getAuth();
-
-  const navigate = useNavigate();
-  const [values, setValues] = useState({
-    // state with multiple keys
-    nickname: "",
-    email: "",
-    password: "",
-    showPassword: false,
-  });
 
   // state값 변경
   const onChangeId = (event) => { setId(event.target.value); }
@@ -87,6 +53,7 @@ export default function SignUp() {
   const onChangeEmail = (event) => { setEmail(event.target.value); }
   const onChangePassword = (event) => { setPassword(event.target.value); }
   const onClickShowPasswd = () => { setShowPassword(!showPassword); }
+
   // id 유효성 검사
   useEffect(() => {
     const idReg = /^(?=.*[a-zA-Z])(?=.*[0-9]).{8,16}$/;
@@ -98,6 +65,7 @@ export default function SignUp() {
       setValId(true);
     }
   }, [id]);
+
   // 닉네임 유효성 검사
   useEffect(() => {
     if (nickname.length < 2 || nickname.length > 16) {
@@ -108,6 +76,7 @@ export default function SignUp() {
       setValNick(true);
     }
   }, [nickname]);
+
   // 이메일 유효성 검사
   useEffect(() => {
     // ex) naver.com
@@ -125,6 +94,7 @@ export default function SignUp() {
       setValEmail(true);
     }
   }, [email]);
+
   // 비번 유효성 검사
   useEffect(() => {
     const passwordReg =
@@ -140,82 +110,43 @@ export default function SignUp() {
     }
   }, [password]);
 
-
-
-  /* const ChangePassword = (event) => { // 현재 password만 따로 처리해봄
-    event.preventDefault();
-    setPassword(event.target.value);
-    console.log(values, event.target.name, event.target.value, password);
-
-    // 비밀번호 유효성 체크
-    const passwordRegex =
-      /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/;
-    
-  }; */
-  // https://phrygia.github.io/react/2021-11-25-mui-react/
-
-
-
-  /* const onChange = e => {
-        const { name, value } = e.target;
-        setValues({
-          ...inputs,
-          [name]: value
-        });
-    }; */
-
-  /* const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  }; */
-
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
-  /* const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  }; */
-  const onSubmit = async(e) => {
+  const onSubmit = async (e) => {
     e.preventDefault(); // 입력 값 사라지는거 방지
     if (valId && valNick && valEmail && valPasswd) {
       const hashpasswd = crypto.createHash('sha256').update(password).digest('base64');
       console.log(hashpasswd);
       try {
         // db에 있는 데이터와 중복체크 먼저
-        const responseEmail= await axios.post(address + "/checkDuplicated/email",
+        const responseEmail = await axios.post(address + "/checkDuplicated/email",
           {
             email: email,
           }
         );
         console.log(responseEmail, responseEmail.data, "isDuplicatedEmail");
         const uniqueEmail = !responseEmail.data.isDuplicated;
-        if(!uniqueEmail){ 
+        if (!uniqueEmail) {
           // alert(`중복된 이메일`);
           setEmailError("중복된 이메일입니다. 새로운 이메일을 입력해주세요!");
           setValEmail(false);
         }
 
-        const responseNick= await axios.post(address + "/checkDuplicated/nickname",
+        const responseNick = await axios.post(address + "/checkDuplicated/nickname",
           {
             nickname: nickname,
           }
         );
         console.log(responseNick, responseNick.data, "isDuplicatedNick");
         const uniqueNick = !responseNick.data.isDuplicated;
-        if(!uniqueNick){ 
+        if (!uniqueNick) {
           setNicknameError("중복된 닉네임입니다!");
           setValNick(false);
         }
 
-        const responseId= await axios.post(address + "/checkDuplicated/user_id",
+        const responseId = await axios.post(address + "/checkDuplicated/user_id",
           {
             user_id: id,
           }
@@ -226,7 +157,7 @@ export default function SignUp() {
           setIdError("중복된 아이디입니다!");
           setValId(false);
         }
-        
+
         // db에 중복된 데이터가 없으면 db에 가입정보 전송
         if (uniqueEmail && uniqueNick && uniqueId) {
           const response = await axios.post(address + "/register",
@@ -241,55 +172,18 @@ export default function SignUp() {
           navigate("/");
         } else {
           alert("이미 있는 계정의 정보입니다. ");
-          console.log("이미 있는 계정의 정보입니다."); 
+          console.log("이미 있는 계정의 정보입니다.");
         }
-        
+
       } catch (error) {
         console.error("console.error(error);", error);
         console.log("console.log(error)", error);
         alert(error, "에러 발생!");
-        
+
       }
-    } else{ alert(`규격에 맞게 작성해주세요!`);}
+    } else { alert(`규격에 맞게 작성해주세요!`); }
   }
-  /* const register = (e) => {
-    e.preventDefault(); // 새로고침 방지
 
-    axios
-      .post(
-        "https://ljlee-de.ddns.net:8080",
-        {
-          usernickname: values["nickname"],
-          email: values["email"],
-          password: values["password"],
-        },
-        config
-      )
-      // response를 받아온다
-      .then((response) => {
-        // Handle success.
-        console.log("Well done!");
-        console.log(response);
-        console.log(response.data);
-        console.log("User profile", response.data.user);
-        console.log("User token", response.data.jwt);
-      })
-      .catch((error) => {
-        // Handle error.
-        console.log("An error occurred:", error.response);
-      });
-  }; */
-
-  /* const handleSubmit = async () => {
-        await axios.post('/api/createUser', values)
-        .then((Response)=>{
-            alert(Response.data)
-        })
-        .catch((Error)=>{
-            console.log("통신 실패 + \n" + Error)
-        })
-    }; */
-  
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs" >
@@ -361,40 +255,6 @@ export default function SignUp() {
                   onChange={onChangeEmail}
                 />
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControl fullWidth>
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    Password
-                  </InputLabel>
-                  <OutlinedInput
-                    id="outlined-adornment-password"
-                    type={showPassword ? "text" : "password"}
-                    required
-                    label="Password"
-                    name="password"
-                    value={password}
-                    helperText={passwordError} // 버튼 밑에 뜨는 내용
-                    error={!valPasswd}
-                    onChange={onChangePassword}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={onClickShowPasswd}
-                          onMouseDown={handleMouseDownPassword}
-                          edge="end"
-                        >
-                          {showPassword ? (
-                            <VisibilityOff />
-                          ) : (
-                            <Visibility />
-                          )}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                </FormControl>
-              </Grid> */}
               <Grid item xs={12}>
                 <TextField // input에 해당함
                   required
@@ -429,14 +289,6 @@ export default function SignUp() {
                 <Link
                   href="/Agree"></Link>
               </Grid>
-              {/* <Grid item xs={12}>
-                <FormControlLabel
-                  control={
-                    <Checkbox value="allowExtraEmails" color="primary" />
-                  }
-                  label="I want to receive inspiration, marketing promotions and updates via email."
-                />
-              </Grid> */}
             </Grid>
             <Button
               type="submit"
@@ -462,7 +314,6 @@ export default function SignUp() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider >
   );
