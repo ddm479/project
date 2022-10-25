@@ -3,9 +3,7 @@ import logo from "./logo.svg";
 import "./App.css";
 import SignIn from "./pages/login/SignIn";
 import SignUp from "./pages/login/SignUp";
-import Agree from "./pages/login/Agree";
 import PrivacyPolicy from "./pages/login/PrivacyPolicy";
-import ServicePolicy from "./pages/login/ServicePolicy";
 import RemoveUser from "./pages/login/RemoveUser";
 
 import ImageUploadPage from "./pages/image/ImageUploadPage";
@@ -20,11 +18,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import app from "./firebase";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material';
-import { HelmetProvider, Helmet } from "react-helmet-async"; // meta태그 사용 패키지
-
 
 
 function App() {
@@ -38,46 +33,42 @@ function App() {
 
     <BrowserRouter>
       <ThemeProvider theme={theme}>
-        
-          <>
-            
+        <>
+          <Routes>
+            <Route index element={<SignIn />} />
+            <Route path="Signup" element={<SignUp />} />
+            <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+            <Route 
+              path="/removeUser"
+              element={<PageLayout Article={RemoveUser} />}
+            />
+            <Route
+              path="upload"
+              element={<PageLayout Article={ImageUploadPage} />}
+            />
+            <Route
+              path="/test"
+              element={<PageLayout Article={ImageUploadResultPage} />}
+            />
+            <Route
+              path="/images"
+              element={<PageLayout Article={ImageListPage} />}
+            />
+            <Route
+              path="/images/:imageId"
+              element={<PageLayout Article={ImageDetailPage} />}
+            />
+            <Route
+              path="/results"
+              element={<PageLayout Article={ResultListPage} />}
+            />
+            <Route
+              path="/results/:resultId"
+              element={<PageLayout Article={ResultDetailPage} />}
+            />
+          </Routes>
+        </>
 
-            <Routes>
-              <Route index element={<SignIn />} />
-              <Route path="Signup" element={<SignUp />} />
-              <Route path="Agree" element={<Agree />} />
-              <Route path="PrivacyPolicy" element={<PrivacyPolicy />} />
-              <Route path="ServicePolicy" element={<ServicePolicy />} />
-              <Route path="/removeUser"
-                element={<PageLayout Article={RemoveUser} />}
-              />
-              <Route
-                path="upload"
-                element={<PageLayout Article={ImageUploadPage} />}
-              />
-              <Route
-                path="/test"
-                element={<PageLayout Article={ImageUploadResultPage} />}
-              />
-              <Route
-                path="/images"
-                element={<PageLayout Article={ImageListPage} />}
-              />
-              <Route
-                path="/images/:imageId"
-                element={<PageLayout Article={ImageDetailPage} />}
-              />
-              <Route
-                path="/results"
-                element={<PageLayout Article={ResultListPage} />}
-              />
-              <Route
-                path="/results/:resultId"
-                element={<PageLayout Article={ResultDetailPage} />}
-              />
-            </Routes>
-          </>
-        
       </ThemeProvider>
     </BrowserRouter >
   );
