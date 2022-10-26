@@ -62,11 +62,16 @@ function PageLayout({ Article }) {
             //console.log(checkLogin, checkLogin.data);
             //const sess = await axios.get(address + "/session");
             //console.log(sess, sess.data);
-            const response = await axios.get(address + "/logout",
+            const responseLogout = await axios.get(address + "/logout",
                 { withCredentials: true },
                 {},
             );
-            console.log(response, response.data);
+            console.log(responseLogout, responseLogout.data);
+            const resCheck = await axios.get(address + "/checkLogin",
+                { withCredentials: true },
+                {},
+            );
+            console.log(resCheck, resCheck.data);
         } catch (error) {
             console.error("console.error(error);", error);
             console.log("console.log(error)", error);

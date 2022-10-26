@@ -25,7 +25,7 @@ const theme = createTheme();
 function SignIn() {
   const navigate = useNavigate();
   const [cookies, setCookie] = useCookies(['user_id']); // 쿠키 훅 
-  const address = "https://bitwise.ljlee37.com:8080";
+  const address = "https://bitwise.ljlee37.com:8080"; // "https://bitwise.ljlee37.com:8080"
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget); 
@@ -48,6 +48,7 @@ function SignIn() {
       console.log(cookies);
       console.log(cookies.id);
       console.log(cookies.user_id);
+      console.log(!undefined);
       // setCookie('user_id', cookies.id);// 쿠키에 토큰 저장
       // console.log(cookies);
       // console.log(response.json());
