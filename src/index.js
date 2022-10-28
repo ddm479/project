@@ -3,24 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 import { CookiesProvider } from 'react-cookie';
 
-
-const clientId = "1037417891725-d7fnfaa8up490p8ghd6cl6tmc9nbbi4v.apps.googleusercontent.com"; // 로그인을 한 상태에서 하면 구글 로그인창이 안뜸
-// 구글 oauth 클라이언트 id
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
+  // eslint-disable-next-line react/jsx-filename-extension
   <CookiesProvider>
     <React.StrictMode>
-      <GoogleOAuthProvider clientId={clientId}>
-        <App />
-      </GoogleOAuthProvider>
+      <App />
     </React.StrictMode>
   </CookiesProvider>
 
 );
-
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
