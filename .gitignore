@@ -16,6 +16,7 @@ localhost+1-key.pem
 /build
 
 # misc
+.env
 .DS_Store
 .env.local
 .env.development.local
