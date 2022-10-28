@@ -1,3 +1,4 @@
+/* eslint-disable operator-linebreak */
 import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
@@ -10,28 +11,10 @@ import {
     Grid,
     Typography,
 } from '@mui/material';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import HourglassTopIcon from '@mui/icons-material/HourglassTop';
 
 const Wrapper = styled.div``;
 
 const ResultContainer = styled.div``;
-
-// const ResultItem = styled.div`
-//   height: 8rem;
-//   border-top: 1px solid grey;
-//   padding: 1rem;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   justify-content: left;
-//   cursor: pointer;
-// `;
-
-// const ImageContainer = styled.div`
-//   width: 8rem;
-//   height: 8rem;
-// `;
 
 const Image = styled.img`
   object-fit: cover;
@@ -42,21 +25,6 @@ const Image = styled.img`
 const TextContainer = styled.div`
   padding: 2rem;
 `;
-
-const status = [
-    {
-        name: '분석완료',
-        icon: <CheckCircleOutlineIcon />,
-    },
-    {
-        name: '분석중',
-        icon: <HourglassTopIcon />,
-    },
-    {
-        name: '요청됨',
-        icon: <CheckCircleOutlineIcon />,
-    },
-];
 
 function ResultListView({ results }) {
     const navigate = useNavigate();
@@ -76,7 +44,9 @@ function ResultListView({ results }) {
                             >
                                 <CardActionArea
                                     onClick={() => {
-                                        linkToResultDetailPage(result.resultId);
+                                        if (result.class_category !== null) {
+                                            linkToResultDetailPage(result.resultId);
+                                        }
                                     }}
                                 >
                                     <CardMedia sx={{ height: 128 }}>
@@ -85,13 +55,16 @@ function ResultListView({ results }) {
                                     <CardContent>
                                         <TextContainer>
                                             <Typography variant="h6">{result.imageAlt}</Typography>
+
                                             <Typography>{`${result.inference_status}`}</Typography>
-                                            {result.inference_status === '분석완료' && (
+                                            {result.class_category !== null && (
                                                 <Typography>
-                                                    {`${result.classCategoryName
-                                                        } (${result.class_category.toString()})`}
+                                                    {`(${result.class_category.toString()})`}
                                                 </Typography>
                                             )}
+                                            <Typography sx={{ color: 'gray', fontSize: '0.875rem' }}>
+                                                {`${new Date(result.date).toLocaleString()}에 업로드`}
+                                            </Typography>
                                         </TextContainer>
                                     </CardContent>
                                 </CardActionArea>
@@ -111,27 +84,9 @@ ResultListView.propTypes = {
             imageAlt: PropTypes.string.isRequired,
             inference_status: PropTypes.string.isRequired,
             class_category: PropTypes.number.isRequired,
+            date: PropTypes.string.isRequired,
         }),
     ).isRequired,
 };
-
-// <ResultItem
-// onClick={() => {
-//   linkToResultDetailPage(result.resultId);
-// }}
-// >
-{
-    /* <ImageContainer>
-    <Image src={result.imageUrl} alt={result.imageAlt} />
-  </ImageContainer>
-  <TextContainer>
-    <h4>{result.imageAlt}</h4>
-    <p>{`${result.inference_status}`}</p>
-    {result.inference_status === '분석완료' && (
-      <p>{`${result.classCategoryName} (${result.class_category.toString()})`}</p>
-    )}
-  </TextContainer> */
-}
-// </ResultItem>
 
 export default ResultListView;
