@@ -302,7 +302,7 @@ export default function SignUp() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link
-                  href="/"
+                  href="/signin"
                   variant="body2"
                 /* onClick={() => {
                   navigate("/SignIn");

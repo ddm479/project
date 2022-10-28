@@ -36,14 +36,14 @@ function App() {
       <ThemeProvider theme={theme}>
 
         <Routes>
-          <Route index element={<SignIn />} />
+          <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
           <Route
             path="/removeUser"
             element={<PageLayout Article={RemoveUser} />}
           />
-          <Route path="/welcome" element={<WelcomePage />} />
+          <Route index element={<WelcomePage />} />
           <Route
             path="/upload"
             element={<PageLayout Article={ImageUploadPage} />}

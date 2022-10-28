@@ -132,7 +132,7 @@ function SignIn() {
             <Grid container /* container가 있는게 행*/>
               <Grid item>
                 <Link
-                  href="/Signup"
+                  href="/signup"
                   variant="body2"
                 /* onClick={() => {
                   navigate("/");
