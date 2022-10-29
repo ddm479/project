@@ -33,7 +33,7 @@
   },
   "scripts": {
     "start": "set HTTPS=true&&set SSL_CRT_FILE=localhost+1-cert.pem&&set SSL_KEY_FILE=localhost+1-key.pem&&react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "set HTTPS=true&&set SSL_CRT_FILE=ljlee37.com.pem&&set SSL_KEY_FILE=ljlee37.com-key.pem&&react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
