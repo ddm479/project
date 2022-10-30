@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import * as React from "react";
+import React, { useEffect } from 'react';
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -16,7 +16,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import axios from "axios";
 import crypto from 'crypto';
-import { useCookies } from 'react-cookie';
+
+import { sessionActions } from "../../redux/sessionReducer";  // action함수를 호출하기 위함
+import { useSelector, useDispatch} from 'react-redux'; // store에서 값을 가져오기 위함
 
 
 
@@ -24,7 +26,16 @@ const theme = createTheme();
 
 function SignIn() {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(['user_id']); // 쿠키 훅 
+  // const [cookies, setCookie] = useCookies(['user_id']); // 쿠키 훅 
+  ///////////////////////////////////////////////////////
+  const dispatch = useDispatch();
+  const serverSession = useSelector((state) => {
+      //console.log("state", state);
+      //console.log("state.session", state.session);
+      console.log("state.session.session_id", state.session.session_id);
+      return state.session.session_id;
+  });
+  ///////////////////////////////////////////////////////////
   const address = "https://bitwise.ljlee37.com:8080"; // "https://bitwise.ljlee37.com:8080"
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -45,12 +56,16 @@ function SignIn() {
       );
       console.log(response);
       console.log(response.data);
+      console.log("response.data.session", response.data.session);
+      const resSession = response.data.session;
+      console.log("추가 전 serverSession", serverSession);
+      dispatch(sessionActions.setSessionFromServer(resSession));
+      console.log("값 추가 후", serverSession);
+      dispatch(sessionActions.getAllSessions());
+      console.log("그냥 조회만 하고 난 후", serverSession);
+      // console.log("dispatch", dispatch(sessionActions.getAllSessions()));
       console.log("!undefined", !undefined);
-      console.log("null", null);
-      console.log(!null);
-      // setCookie('user_id', cookies.id);// 쿠키에 토큰 저장
-      // console.log(cookies);
-      // console.log(response.json());
+      console.log("!null", !null);
       const isLogin = response.data.loginSuccess;
       // if (response.data.description !== undefinded)
       if(isLogin){ 
