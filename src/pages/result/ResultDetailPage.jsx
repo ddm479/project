@@ -10,6 +10,9 @@ import koreaRoadSigns from '../../jsonDataset/koreaRoadSigns.json';
 import sampleImageContents from '../../jsonDataset/sampleImageContents.json';
 import sampleResults from '../../jsonDataset/sampleResults.json';
 
+import { sessionActions } from "../../redux/sessionReducer";
+import { useSelector, useDispatch} from 'react-redux';
+
 const Wrapper = styled.div``;
 
 const ArticleWrapper = styled.div`
@@ -92,6 +95,15 @@ function speech(txt) {
 // END: 인용한 코드: https://hoyashu.tistory.com/36
 // ================================================
 function ResultDetailPage() {
+    ///////////////////////////////////////////////////////
+    const dispatch = useDispatch();
+    const serverSession = useSelector((state) => {
+        //console.log("state", state);
+        //console.log("state.session", state.session);
+        console.log("state.session.session_id", state.session.session_id);
+        return state.session.session_id;
+    });
+    ///////////////////////////////////////////////////////////
     useEffect(() => () => {
         window.speechSynthesis.cancel();
     });
@@ -100,7 +112,7 @@ function ResultDetailPage() {
     useEffect(() => {
         axios
             .post('https://bitwise.ljlee37.com:8080/requestDetail', {
-                user_id: 'test',
+                session_id: serverSession,
                 requestId: resultId,
             })
             .then((response) => {

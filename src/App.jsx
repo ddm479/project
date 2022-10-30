@@ -21,6 +21,8 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import WelcomePage from "./pages/result/WelcomePage";
 
+import { Provider } from 'react-redux'; // store를 자식 컴포넌트에게 사용하게 함
+import store from './redux/store'; // store에 세션과 로그인여부에 관한 정보가 있음
 
 
 function App() {
@@ -34,41 +36,42 @@ function App() {
     // <BrowserRouter basename={process.env.REACT_APP_PUBLIC_URL}>
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <ThemeProvider theme={theme}>
-
-        <Routes>
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
-          <Route
-            path="/removeUser"
-            element={<PageLayout Article={RemoveUser} />}
-          />
-          <Route index element={<WelcomePage />} />
-          <Route
-            path="/upload"
-            element={<PageLayout Article={ImageUploadPage} />}
-          />
-          <Route
-            path="/test"
-            element={<PageLayout Article={ImageUploadResultPage} />}
-          />
-          <Route
-            path="/images"
-            element={<PageLayout Article={ImageListPage} />}
-          />
-          <Route
-            path="/images/:imageId"
-            element={<PageLayout Article={ImageDetailPage} />}
-          />
-          <Route
-            path="/results"
-            element={<PageLayout Article={ResultListPage} />}
-          />
-          <Route
-            path="/results/:resultId"
-            element={<PageLayout Article={ResultDetailPage} />}
-          />
-        </Routes>
+        <Provider store={store}>
+          <Routes>
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
+            <Route
+              path="/removeUser"
+              element={<PageLayout Article={RemoveUser} />}
+            />
+            <Route index element={<WelcomePage />} />
+            <Route
+              path="/upload"
+              element={<PageLayout Article={ImageUploadPage} />}
+            />
+            <Route
+              path="/test"
+              element={<PageLayout Article={ImageUploadResultPage} />}
+            />
+            <Route
+              path="/images"
+              element={<PageLayout Article={ImageListPage} />}
+            />
+            <Route
+              path="/images/:imageId"
+              element={<PageLayout Article={ImageDetailPage} />}
+            />
+            <Route
+              path="/results"
+              element={<PageLayout Article={ResultListPage} />}
+            />
+            <Route
+              path="/results/:resultId"
+              element={<PageLayout Article={ResultDetailPage} />}
+            />
+          </Routes>
+        </Provider>
       </ThemeProvider>
     </BrowserRouter>
   );

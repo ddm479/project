@@ -15,6 +15,9 @@ import axios from 'axios';
 import ImagesView from '../../components/view/ImageListView';
 import sampleImageContents from '../../jsonDataset/sampleDetailImageContents.json';
 
+import { sessionActions } from "../../redux/sessionReducer";
+import { useSelector, useDispatch} from 'react-redux';
+
 const Wrapper = styled.div``;
 
 function SortButton({ text, compareFn, setImageContents }) {
@@ -65,10 +68,19 @@ const descendingDate = (a, b) => Date.parse(b.date) - Date.parse(a.date);
 function ImageListPage() {
     const [searchedName, setSearchedName] = useState('');
     const [images, setImages] = useState([]);
+    ///////////////////////////////////////////////////////
+    const dispatch = useDispatch();
+    const serverSession = useSelector((state) => {
+        //console.log("state", state);
+        //console.log("state.session", state.session);
+        console.log("state.session.session_id", state.session.session_id);
+        return state.session.session_id;
+    });
+    ///////////////////////////////////////////////////////////
     useEffect(() => {
         axios
             .post('https://bitwise.ljlee37.com:8080/imageList', {
-                user_id: 'test',
+                session_id: serverSession,
             })
             .then((response) => {
                 const out = response.data.queryResult.map((image) => ({
@@ -98,7 +110,7 @@ function ImageListPage() {
             axios
                 .delete('https://bitwise.ljlee37.com:8080/image', {
                     data: {
-                        user_id: 'test',
+                        session_id: serverSession,
                         imageId: key,
                     },
                 })

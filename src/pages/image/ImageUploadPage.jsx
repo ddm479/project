@@ -6,6 +6,9 @@ import axios from 'axios';
 import ImageUploadBox from '../../components/upload/ImageUploadBox';
 import ImagesView from '../../components/view/ImageListView';
 
+import { sessionActions } from "../../redux/sessionReducer";
+import { useSelector, useDispatch} from 'react-redux';
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -21,6 +24,15 @@ function ImageUploadPage() {
     const [sended, setSended] = useState(false);
     const [sendSuccess, setSendSuccess] = useState(false);
 
+    ///////////////////////////////////////////////////////
+    const dispatch = useDispatch();
+    const serverSession = useSelector((state) => {
+        //console.log("state", state);
+        //console.log("state.session", state.session);
+        console.log("state.session.session_id", state.session.session_id);
+        return state.session.session_id;
+    });
+  ///////////////////////////////////////////////////////////
     const toImageContents = (files) => {
         files.forEach((file, index) => {
             if (file.type === 'image/jpeg') {
@@ -64,7 +76,9 @@ function ImageUploadPage() {
                 formData.append('photos', imageContent.file);
             });
             axios
-                .post('https://bitwise.ljlee37.com:8080/upload', formData)
+                .post('https://bitwise.ljlee37.com:8080/upload',
+                    { session_id: 'test', formData }
+                )
                 .then((response) => {
                     console.log(response);
                     setSendSuccess(true);

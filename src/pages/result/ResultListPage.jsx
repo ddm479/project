@@ -6,14 +6,26 @@ import ResultListView from '../../components/view/ResultView';
 import sampleImageContents from "../../jsonDataset/sampleImageContents";
 import sampleResults from '../../jsonDataset/sampleResults.json';
 
+import {sessionActions} from "../../redux/sessionReducer";
+import { useSelector, useDispatch} from 'react-redux';
+
 const Wrapper = styled.div``;
 
 function ResultListPage() {
     const [requests, setRequests] = useState([]);
-    useEffect(() => {
+    const dispatch = useDispatch();
+    const serverSession = useSelector((state) => {
+        //console.log("state", state);
+        //console.log("state.session", state.session);
+        console.log("로그인 한 결과목록 페이지의 state.session.session_id", state.session.session_id);
+        return state.session.session_id;
+    });
+
+    useEffect( () => {
+        console.log(serverSession);
         axios
             .post('https://bitwise.ljlee37.com:8080/requestList', {
-                user_id: 'test',
+                session_id: serverSession,
             })
             .then((response) => {
                 const out = response.data.queryResult.map((request) => ({

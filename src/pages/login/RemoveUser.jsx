@@ -5,6 +5,9 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Checkbox from "@mui/material/Checkbox";
 
+import { sessionActions } from "../../redux/sessionReducer";
+import { useSelector, useDispatch} from 'react-redux';
+
 const address = "https://bitwise.ljlee37.com:8080";
 
 const Wrapper = styled.div``;
@@ -12,6 +15,15 @@ function RemoveUser() {
     const user_id = "test";
     const navigate = useNavigate();
     const [checked, setChecked] = useState(false);
+    ///////////////////////////////////////////////////////
+    const dispatch = useDispatch();
+    const serverSession = useSelector((state) => {
+        //console.log("state", state);
+        //console.log("state.session", state.session);
+        console.log("state.session.session_id", state.session.session_id);
+        return state.session.session_id;
+    });
+  ///////////////////////////////////////////////////////////
     const onClickCheckBox = (event) => {
         setChecked(event.target.checked);
     }
@@ -21,7 +33,7 @@ function RemoveUser() {
                 // await는 async 함수 안에서만 사용가능
                 const response = await axios.delete(address + "/removeAccount",
                     {
-                        user_id: user_id,
+                        session_id: serverSession,
                     },
                     { withCredentials: true } // 쿠키 cors 통신 설정, 서버도 같이 처리해줘야함
                 );
