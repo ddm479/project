@@ -77,7 +77,8 @@ function ImageUploadPage() {
             });
             axios
                 .post('https://bitwise.ljlee37.com:8080/upload',
-                    { session_id: 'test', formData }
+                    { session_id: serverSession, formData }
+                    // data 전송시에 반드시 생성되어 있는 formData 객체만 전송 하여야 한다.
                 )
                 .then((response) => {
                     console.log(response);
