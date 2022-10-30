@@ -58,8 +58,6 @@ function PageLayout({ Article }) {
     const onLogoutClick = async () => {
         try {
             // await는 async 함수 안에서만 사용가능
-            //const checkLogin = await axios.get(address + "/checkLogin");
-            //console.log(checkLogin, checkLogin.data);
             //const sess = await axios.get(address + "/session");
             //console.log(sess, sess.data);
             const responseLogout = await axios.get(address + "/logout",

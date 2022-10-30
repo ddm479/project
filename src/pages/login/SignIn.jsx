@@ -45,10 +45,9 @@ function SignIn() {
       );
       console.log(response);
       console.log(response.data);
-      console.log(cookies);
-      console.log(cookies.id);
-      console.log(cookies.user_id);
       console.log("!undefined", !undefined);
+      console.log("null", null);
+      console.log(!null);
       // setCookie('user_id', cookies.id);// 쿠키에 토큰 저장
       // console.log(cookies);
       // console.log(response.json());
