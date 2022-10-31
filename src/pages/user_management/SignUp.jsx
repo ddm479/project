@@ -302,11 +302,11 @@ export default function SignUp() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link
-                  href="/signin"
+                  // href="/project"
                   variant="body2"
-                /* onClick={() => {
-                  navigate("/SignIn");
-                }} */
+                  onClick={() => {
+                    navigate("/");
+                  }}
                 >
                   계정이 있으신가요? 로그인 하러가기
                 </Link>
