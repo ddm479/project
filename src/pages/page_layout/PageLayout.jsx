@@ -6,6 +6,7 @@ import { AppBar, Box, Button, Typography } from '@mui/material';
 import UploadIcon from '@mui/icons-material/Upload';
 import CollectionsIcon from '@mui/icons-material/Collections';
 import ArticleIcon from '@mui/icons-material/Article';
+import NoAccountsIcon from '@mui/icons-material/NoAccounts';
 // import BugReportIcon from '@mui/icons-material/BugReport';
 import { grey } from '@mui/material/colors';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +33,7 @@ const urlContents = [
     // { title: '테스트', url: '/test', icon: <BugReportIcon /> },
     { title: '이미지 목록', url: '/images', icon: <CollectionsIcon /> },
     { title: '결과 목록', url: '/results', icon: <ArticleIcon /> },
-    { title: '회원 탈퇴', url: '/removeUser', icon: <ArticleIcon /> },
+    { title: '회원 탈퇴', url: '/removeUser', icon: <NoAccountsIcon /> },
 ]; // 왼쪽 부분 Naviagation
 
 const address = "https://bitwise.ljlee37.com:8080";
@@ -82,51 +83,52 @@ function PageLayout({ Article }) {
         }
     }
     return (
-        <Wrapper>{(isLoggedIn && serverSession) &&
-            <AppBar sx={{ padding: 1 }}>
-                <TopWrapper>
-                    <Typography
-                        sx={{ fontSize: '2rem', cursor: 'pointer' }}
-                        onClick={() => {
-                            navigate('/images');
-                        }}
-                    >
-                        Road Sign Service
-                    </Typography>
-                    <Button variant="contained" onClick={onLogoutClick}>로그아웃</Button>
-                </TopWrapper>
-            </AppBar>}
-            {(isLoggedIn && serverSession) &&          
-            <Box
-                sx={{
-                    paddingTop: 8,
-                    borderBottom: '1px solid grey',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'left',
-                    alignItems: 'stretch',
-                }}
-            >
-                <NavigatorWrapper>
-                    <PageNavigator urlContents={urlContents} />
-                </NavigatorWrapper>
+        <Wrapper>
+            {(isLoggedIn && serverSession) &&
+                <AppBar sx={{ padding: 1 }}>
+                    <TopWrapper>
+                        <Typography
+                            sx={{ fontSize: '2rem', cursor: 'pointer' }}
+                            onClick={() => {
+                                navigate('/images');
+                            }}
+                        >
+                            Road Sign Service
+                        </Typography>
+                        <Button variant="contained" onClick={onLogoutClick}>로그아웃</Button>
+                    </TopWrapper>
+                </AppBar>}
+            {(isLoggedIn && serverSession) &&
                 <Box
                     sx={{
-                        flexGrow: 1,
-                        padding: '1rem',
-                        minWidth: '32rem',
-                        backgroundColor: grey[100],
+                        paddingTop: 8,
+                        borderBottom: '1px solid grey',
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'left',
+                        alignItems: 'stretch',
                     }}
                 >
+                    <NavigatorWrapper>
+                        <PageNavigator urlContents={urlContents} />
+                    </NavigatorWrapper>
                     <Box
                         sx={{
-                            maxWidth: '64rem',
+                            flexGrow: 1,
+                            padding: '1rem',
+                            minWidth: '32rem',
+                            backgroundColor: grey[100],
                         }}
                     >
-                        <Article />
+                        <Box
+                            sx={{
+                                maxWidth: '64rem',
+                            }}
+                        >
+                            <Article />
+                        </Box>
                     </Box>
-                </Box>
-            </Box>}
+                </Box>}
         </Wrapper>
     );
 }
