@@ -10,15 +10,16 @@ const sessionSlice = createSlice({
     name: 'session',
     initialState,
     reducers: {
-        // session상태를 검사하기 위함, url로 접근할 때 로그인 여부 검사
-        getAllSessions(state){
-            console.log("이거 하면 달리지는 게 잇나");
+        // url로 서비스 접근 제한하기 위함, 로그인 여부를 false로 바꾼다.
+        setLogout(state){
+            state.isLoggedIn = false;
+            state.session_id = null; // session_id를 null로 설정한다.
         },
         // login 성공시에 실행, action은 외부 값을 나타내는 매개변수
         setLoginSuccess(state){
             state.isLoggedIn =  true; // state의 로그인여부를 true로 바꾼다
         },
-        // 서버로부터 받은 세션으로 설정한다
+        // 서버로부터 받은 세션으로 session_id를 설정한다
         setSessionFromServer(state, action){
             console.log("서버로부터 세션 받는 중", action); // action은 객체 구조인데 payload속성이 있음 
             state.session_id = action.payload; // return { ...state, session: payload} 와 똑같은데 redux와 달리 toolkit은 저 표현식으로 가능함 
