@@ -52,10 +52,10 @@ function PageLayout({ Article }) {
     const isLoggedIn = useSelector((state) => {
         //console.log("state", state);
         //console.log("state.session", state.session);
-        console.log("PageLayout의 state.session.session_id", state.session.isLoggedIn);
+        console.log("PageLayout의 state.session.isLoggedIn", state.session.isLoggedIn);
         return state.session.isLoggedIn;
     }); // store에서 isLoggedIn 가져오기
-  ///////////////////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////
     useEffect(() => {
         // 로그인이 안 되어 있고 session_id가 null이면 url로 접근불가
         if (isLoggedIn === false || serverSession === null) {
