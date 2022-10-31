@@ -6,8 +6,8 @@ import ResultListView from '../../components/view/ResultView';
 import sampleImageContents from "../../jsonDataset/sampleImageContents";
 import sampleResults from '../../jsonDataset/sampleResults.json';
 
-import {sessionActions} from "../../redux/sessionReducer";
-import { useSelector, useDispatch} from 'react-redux';
+import { sessionActions } from "../../redux/sessionReducer";
+import { useSelector, useDispatch } from 'react-redux';
 
 const Wrapper = styled.div``;
 
@@ -23,7 +23,7 @@ function ResultListPage() {
     });
     /////////////////////////////////////////
 
-    useEffect( () => {
+    useEffect(() => {
         console.log(serverSession);
         axios
             .post('https://bitwise.ljlee37.com:8080/requestList', {
