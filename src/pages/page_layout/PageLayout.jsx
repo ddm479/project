@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import axios from 'axios';
@@ -40,17 +40,28 @@ const address = "https://bitwise.ljlee37.com:8080";
 function PageLayout({ Article }) {
     const navigate = useNavigate();
     ///////////////////////////////////////////////////////
+    // 다른 컴포넌트에서 일일이 useEffect를 통해서 로그인 여부 검사를 진행하지 않아도 된다. 여기서 진행하기 때문에 그리고 useEffect를 사용하더라도 잠깐이나마 페이지가 렌더링되서 로드되었는데 여기서 isLoggedIn을 사용해서 조건부 렌더링을 적용해서 아예 안보이게끔 성공함 
     const dispatch = useDispatch();
     const serverSession = useSelector((state) => {
         //console.log("state", state);
         //console.log("state.session", state.session);
-        console.log("state.session.session_id", state.session.session_id);
+        console.log("PageLayout의 state.session.session_id", state.session.session_id);
         return state.session.session_id;
     });
+    const isLoggedIn = useSelector((state) => {
+        //console.log("state", state);
+        //console.log("state.session", state.session);
+        console.log("PageLayout의 state.session.session_id", state.session.isLoggedIn);
+        return state.session.isLoggedIn;
+    }); // store에서 isLoggedIn 가져오기
   ///////////////////////////////////////////////////////////
-    /* useEffect(() => {
-        authCheck(); // 로그인 체크 함수
-    }); */
+    useEffect(() => {
+        // 로그인이 안 되어 있고 session_id가 null이면 url로 접근불가
+        if (isLoggedIn === false || serverSession === null) {
+            dispatch(sessionActions.setLogout()); // 세션 로그아웃 처리
+            navigate('/');
+        }
+    }, []);
 
     // <Button variant="outlined" onClick={onLogoutClick}>로그아웃</Button>
     const onLogoutClick = async () => {
@@ -75,7 +86,7 @@ function PageLayout({ Article }) {
         }
     }
     return (
-        <Wrapper>
+        <Wrapper>{(isLoggedIn && serverSession) &&
             <AppBar sx={{ padding: 1 }}>
                 <TopWrapper>
                     <Typography
@@ -88,8 +99,8 @@ function PageLayout({ Article }) {
                     </Typography>
                     <Button variant="contained" onClick={onLogoutClick}>로그아웃</Button>
                 </TopWrapper>
-            </AppBar>
-
+            </AppBar>}
+            {(isLoggedIn && serverSession) &&          
             <Box
                 sx={{
                     paddingTop: 8,
@@ -119,7 +130,7 @@ function PageLayout({ Article }) {
                         <Article />
                     </Box>
                 </Box>
-            </Box>
+            </Box>}
         </Wrapper>
     );
 }
