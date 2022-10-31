@@ -5,8 +5,8 @@ import axios from 'axios';
 import { Typography } from '@mui/material';
 import sampleImageContents from '../../jsonDataset/sampleDetailImageContents.json';
 
-import {sessionActions} from "../../redux/sessionReducer";
-import { useSelector, useDispatch} from 'react-redux';
+import { sessionActions } from "../../redux/sessionReducer";
+import { useSelector, useDispatch } from 'react-redux';
 
 const Wrapper = styled.div``;
 
@@ -57,7 +57,16 @@ function ImageDetailPage() {
                         날짜:
                         {new Date(img.date).toLocaleString()}
                     </Typography>
-                    <img key={img.key} src={img.url} alt={img.alt} />
+                    <img
+                        style={{
+                            width: '100%',
+                            height: (window.innerHeight || document.body.clientHeight) * 0.8,
+                            objectFit: 'scale-down',
+                        }}
+                        key={img.key}
+                        src={img.url}
+                        alt={img.alt}
+                    />
                 </div>
             ))}
         </Wrapper>
