@@ -29,7 +29,7 @@ function SignIn() {
   const serverSession = useSelector((state) => {
       //console.log("state", state);
       //console.log("state.session", state.session);
-      console.log("로그인 성공하고 난 후의 state.session.session_id", state.session.session_id);
+      console.log("로그인 페이지의 state.session.session_id", state.session.session_id);
       return state.session.session_id;
   });
   ///////////////////////////////////////////////////////////
