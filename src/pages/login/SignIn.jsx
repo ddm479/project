@@ -63,8 +63,6 @@ function SignIn() {
       const isLogin = response.data.loginSuccess;
       // if (response.data.description !== undefinded)
       if(isLogin){ 
-        // alert("로그인 성공");
-        alert(document.cookie);
         console.log(document.cookie);
         dispatch(sessionActions.setLoginSuccess()); // 세션 로그인 처리
         navigate("/images");
