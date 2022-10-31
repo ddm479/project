@@ -29,7 +29,7 @@ function ImageUploadPage() {
     const serverSession = useSelector((state) => {
         //console.log("state", state);
         //console.log("state.session", state.session);
-        console.log("state.session.session_id", state.session.session_id);
+        console.log("이미지 업로드 페이지의 state.session.session_id", state.session.session_id);
         return state.session.session_id;
     });
   ///////////////////////////////////////////////////////////
@@ -73,11 +73,13 @@ function ImageUploadPage() {
             const formData = new FormData();
             imageContents.forEach((imageContent) => {
                 console.log(imageContent.file);
-                formData.append('photos', imageContent.file);
+                formData.append('photos', imageContent.file); // formData에 이미지 담기
             });
+            formData.append('session_id', serverSession);
             axios
                 .post('https://bitwise.ljlee37.com:8080/upload',
-                    { session_id: serverSession, formData }
+                // formData를 보낼때, header 부분은 브라우저가 자동으로 설정해주기 때문에 Content-Type을 application/x-www-form-urlencoded ..등 따로 지정할 필요가 없다.
+                    formData
                     // data 전송시에 반드시 생성되어 있는 formData 객체만 전송 하여야 한다.
                 )
                 .then((response) => {
