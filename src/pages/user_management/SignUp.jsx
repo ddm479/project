@@ -285,10 +285,7 @@ export default function SignUp() {
                   }
                 />
               </Grid>
-              <Grid xs={12}>
-                <Link
-                  href="/Agree"></Link>
-              </Grid>
+              
             </Grid>
             <Button
               type="submit"
@@ -302,8 +299,10 @@ export default function SignUp() {
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link
-                  // href="/project"
+                  // href="/project"  // 상위 경로를 다 써야함, 상위 경로가 바뀌면 계속 바꿔줘야 해서 사용 안함
                   variant="body2"
+                  component="button"
+                  underline="hover"
                   onClick={() => {
                     navigate("/");
                   }}

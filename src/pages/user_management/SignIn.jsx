@@ -139,11 +139,13 @@ function SignIn() {
             <Grid container /* container가 있는게 행*/>
               <Grid item>
                 <Link
-                  href="/project/signup"
+                  // href="/project/signup" // 상위 경로를 다 써야함, 상위 경로가 바뀌면 계속 바꿔줘야 해서 사용 안함
+                  component="button"
+                  underline="hover"
                   variant="body2"
-                /* onClick={() => {
-                  navigate("/");
-                }} */
+                  onClick={() => {
+                    navigate("/signup");
+                  }}
                 >
                   {"계정이 없으신가요? 회원가입 하러 가기"}
                 </Link>
