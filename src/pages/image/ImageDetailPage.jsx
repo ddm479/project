@@ -18,7 +18,7 @@ function ImageDetailPage() {
     const serverSession = useSelector((state) => {
         //console.log("state", state);
         //console.log("state.session", state.session);
-        console.log("state.session.session_id", state.session.session_id);
+        console.log("이미지 상세 페이지의 state.session.session_id", state.session.session_id);
         return state.session.session_id;
     });
     ///////////////////////////////////////////////////////////

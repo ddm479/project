@@ -73,7 +73,7 @@ function ImageListPage() {
     const serverSession = useSelector((state) => {
         //console.log("state", state);
         //console.log("state.session", state.session);
-        console.log("state.session.session_id", state.session.session_id);
+        console.log("이미지 목록 페이지의 state.session.session_id", state.session.session_id);
         return state.session.session_id;
     });
     ///////////////////////////////////////////////////////////
@@ -95,6 +95,7 @@ function ImageListPage() {
                 setImages(() => data);
             })
             .catch(() => {
+                // return null; return <></>;
                 setImages(() => sampleImageContents);
             });
     }, []);

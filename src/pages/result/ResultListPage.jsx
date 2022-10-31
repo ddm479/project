@@ -13,13 +13,15 @@ const Wrapper = styled.div``;
 
 function ResultListPage() {
     const [requests, setRequests] = useState([]);
+    //////////////////////////////////////////
     const dispatch = useDispatch();
     const serverSession = useSelector((state) => {
         //console.log("state", state);
         //console.log("state.session", state.session);
-        console.log("로그인 한 결과목록 페이지의 state.session.session_id", state.session.session_id);
+        console.log("결과목록 페이지의 state.session.session_id", state.session.session_id);
         return state.session.session_id;
     });
+    /////////////////////////////////////////
 
     useEffect( () => {
         console.log(serverSession);
