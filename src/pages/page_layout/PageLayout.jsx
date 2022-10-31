@@ -67,22 +67,18 @@ function PageLayout({ Article }) {
     const onLogoutClick = async () => {
         try {
             // await는 async 함수 안에서만 사용가능
-            //const sess = await axios.get(address + "/session");
-            //console.log(sess, sess.data);
             const responseLogout = await axios.post(address + "/logout",
                 { session_id: serverSession},
                 { withCredentials: true },
             );
             console.log(responseLogout, responseLogout.data);
-            const resCheck = await axios.post(address + "/checkLogin",
-                { session_id: serverSession },
-                { withCredentials: true },
-            );
-            console.log(resCheck, resCheck.data);
+            dispatch(sessionActions.setLogout()); // 세션 로그아웃 처리
+            navigate('/');
+
         } catch (error) {
             console.error("console.error(error);", error);
             console.log("console.log(error)", error);
-            alert(error, "에러 발생!");
+            alert(error, "로그아웃 실패!");
         }
     }
     return (
