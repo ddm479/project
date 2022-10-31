@@ -95,7 +95,15 @@ function PageLayout({ Article }) {
                         >
                             Road Sign Service
                         </Typography>
-                        <Button variant="contained" onClick={onLogoutClick}>로그아웃</Button>
+                        <Button
+                            style={{
+                                backgroundColor: "white",
+                                color: "#1976d2",
+                            }}
+                            variant="contained" 
+                            onClick={onLogoutClick}>로그아웃
+                        </Button>
+                        {/* <Button variant='contained'>로그아웃</Button> */}
                     </TopWrapper>
                 </AppBar>}
             {(isLoggedIn && serverSession) &&

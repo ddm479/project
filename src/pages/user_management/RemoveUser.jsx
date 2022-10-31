@@ -70,7 +70,7 @@ function RemoveUser() {
             </Typography>
 
             <Typography>
-                회원탈퇴를 하더라도 bitwise는 이미지를 보관하고 사용합니다.
+                회원탈퇴를 하더라도 bitwise는 인공지능 모델의 정확도 향상 및 품질개선을 위해서 이미지를 보관하고 사용합니다.
             </Typography>
             <Typography>
                 <input type="checkbox" checked={checked}
