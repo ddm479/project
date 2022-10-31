@@ -3,9 +3,9 @@ import "./App.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { createTheme, ThemeProvider } from '@mui/material';
 
-import SignIn from "./pages/login/SignIn";
-import SignUp from "./pages/login/SignUp";
-import RemoveUser from "./pages/login/RemoveUser";
+import SignIn from "./pages/user_management/SignIn";
+import SignUp from "./pages/user_management/SignUp";
+import RemoveUser from "./pages/user_management/RemoveUser";
 
 import ImageUploadPage from "./pages/image/ImageUploadPage";
 import ImageUploadResultPage from "./pages/image/ImageUploadResultPage";
