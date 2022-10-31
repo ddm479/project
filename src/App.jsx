@@ -5,7 +5,6 @@ import { createTheme, ThemeProvider } from '@mui/material';
 
 import SignIn from "./pages/login/SignIn";
 import SignUp from "./pages/login/SignUp";
-import PrivacyPolicy from "./pages/login/PrivacyPolicy";
 import RemoveUser from "./pages/login/RemoveUser";
 
 import ImageUploadPage from "./pages/image/ImageUploadPage";
@@ -19,11 +18,9 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import WelcomePage from "./pages/result/WelcomePage";
 
 import { Provider } from 'react-redux'; // store를 자식 컴포넌트에게 사용하게 함
 import store from './redux/store'; // store에 세션과 로그인여부에 관한 정보가 있음
-
 
 function App() {
   const fontFamily = ['Roboto', 'Arial'].join(',');
@@ -38,14 +35,12 @@ function App() {
       <ThemeProvider theme={theme}>
         <Provider store={store}>
           <Routes>
-            <Route path="/signin" element={<SignIn />} />
+            <Route index element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
-            <Route path="/privacyPolicy" element={<PrivacyPolicy />} />
             <Route
               path="/removeUser"
               element={<PageLayout Article={RemoveUser} />}
             />
-            <Route index element={<WelcomePage />} />
             <Route
               path="/upload"
               element={<PageLayout Article={ImageUploadPage} />}
