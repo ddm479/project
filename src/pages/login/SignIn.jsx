@@ -5,8 +5,6 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
 import Link from "@mui/material/Link";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
@@ -26,13 +24,12 @@ const theme = createTheme();
 
 function SignIn() {
   const navigate = useNavigate();
-  // const [cookies, setCookie] = useCookies(['user_id']); // 쿠키 훅 
   ///////////////////////////////////////////////////////
   const dispatch = useDispatch();
   const serverSession = useSelector((state) => {
       //console.log("state", state);
       //console.log("state.session", state.session);
-      console.log("state.session.session_id", state.session.session_id);
+      console.log("로그인 성공하고 난 후의 state.session.session_id", state.session.session_id);
       return state.session.session_id;
   });
   ///////////////////////////////////////////////////////////
@@ -59,11 +56,8 @@ function SignIn() {
       console.log("response.data.session", response.data.session);
       const resSession = response.data.session;
       console.log("추가 전 serverSession", serverSession);
-      dispatch(sessionActions.setSessionFromServer(resSession));
+      dispatch(sessionActions.setSessionFromServer(resSession)); // action 함수 호출
       console.log("값 추가 후", serverSession);
-      dispatch(sessionActions.getAllSessions());
-      console.log("그냥 조회만 하고 난 후", serverSession);
-      // console.log("dispatch", dispatch(sessionActions.getAllSessions()));
       console.log("!undefined", !undefined);
       console.log("!null", !null);
       const isLogin = response.data.loginSuccess;
@@ -72,6 +66,7 @@ function SignIn() {
         // alert("로그인 성공");
         alert(document.cookie);
         console.log(document.cookie);
+        dispatch(sessionActions.setLoginSuccess()); // 세션 로그인 처리
         navigate("/images");
       }
       else{alert("로그인 실패");}
