@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useLayoutEffect } from "react";
 import styled from 'styled-components';
 import { Button, Typography } from '@mui/material';
 import axios from "axios";
@@ -12,7 +12,6 @@ const address = "https://bitwise.ljlee37.com:8080";
 
 const Wrapper = styled.div``;
 function RemoveUser() {
-    const user_id = "test";
     const navigate = useNavigate();
     const [checked, setChecked] = useState(false);
     ///////////////////////////////////////////////////////
@@ -20,34 +19,41 @@ function RemoveUser() {
     const serverSession = useSelector((state) => {
         //console.log("state", state);
         //console.log("state.session", state.session);
-        console.log("state.session.session_id", state.session.session_id);
+        console.log("회원탈퇴 페이지의 state.session.session_id", state.session.session_id);
         return state.session.session_id;
-    });
-  ///////////////////////////////////////////////////////////
+    }); // store에서 session_id 가져오기
+    ///////////////////////////////////////////////////////////
+    
+    
     const onClickCheckBox = (event) => {
         setChecked(event.target.checked);
     }
     const removeUser = async () => {
         if(checked){
             try {
-                // await는 async 함수 안에서만 사용가능
-                const response = await axios.delete(address + "/removeAccount",
+                // await는 async 함수 안에서만 사용가능, 회원탈퇴 부분
+                const response = await axios.delete(address + "/account",
                     {
-                        session_id: serverSession,
-                    },
+                        data: {
+                            session_id: serverSession,
+                        },
+                    }, // delete 요청할 때에는 { data: {} } 형식으로 body를 보낸다.
                     { withCredentials: true } // 쿠키 cors 통신 설정, 서버도 같이 처리해줘야함
                 );
                 console.log(response);
                 console.log(response.data);
-    
+                dispatch(sessionActions.setLogout());
+                navigate('/'); // try catch에서 통신이나 다른 오류나면 바로 catch로 가는 듯 아래 로직처럼 할 필요 없다
+
                 // console.log(response.json());
-                const removeSuccess = response.data.removed;
+                // const removeSuccess = response.data.removed;
                 // if (response.data.description !== undefinded)
-                if (removeSuccess) {
+                /* if (removeSuccess) {
                     // alert("로그인 성공");
+                    
                     navigate("/");
                 }
-                else { alert("회원탈퇴 실패(else)"); }
+                else { alert("회원탈퇴 실패(else)"); } */
             } catch (error) {
                 console.error(error);
                 alert("회원탈퇴 실패!(catch)");
@@ -64,7 +70,7 @@ function RemoveUser() {
             </Typography>
 
             <Typography>
-                회원탈퇴를 하더라도 bitwise는 이미지를 보관하고 사용한다. 민감한 정보가 포함된 사진은 삭제해주세요 라는 내용
+                회원탈퇴를 하더라도 bitwise는 이미지를 보관하고 사용합니다.
             </Typography>
             <Typography>
                 <input type="checkbox" checked={checked}
@@ -75,7 +81,6 @@ function RemoveUser() {
 
             <Button variant="outlined" onClick={removeUser}>회원탈퇴하기</Button>
         </Wrapper>
-
     );
 }
 export default RemoveUser;
