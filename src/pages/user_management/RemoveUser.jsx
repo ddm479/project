@@ -74,7 +74,7 @@ function RemoveUser() {
             </Typography>
             <Typography>
                 <input type="checkbox" checked={checked}
-                    onClick={onClickCheckBox} /> 동의합니다
+                    onChange={onClickCheckBox} /> 동의합니다
                 {/* <Checkbox checked={checked}
                     onClick={onClickCheckBox} />동의합니다 */}
             </Typography>
