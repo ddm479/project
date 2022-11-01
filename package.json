@@ -1,5 +1,5 @@
 {
-  "homepage": "https://ddm479.github.io/project/",
+  "homepage": "https://ddm479.github.io/project",
   "name": "project",
   "version": "0.1.0",
   "private": true,
@@ -24,6 +24,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
     "styled-components": "^5.3.5",
     "web-vitals": "^2.1.4"
   },
@@ -33,7 +34,7 @@
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "cp build/index.html build/404.html && gh-pages -d build"
+    "deploy": "copy build\\index.html build\\404.html && gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
