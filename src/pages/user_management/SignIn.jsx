@@ -32,7 +32,20 @@ function SignIn() {
       console.log("로그인 페이지의 state.session.session_id", state.session.session_id);
       return state.session.session_id;
   });
+  const isLoggedIn = useSelector((state) => {
+    //console.log("state", state);
+    //console.log("state.session", state.session);
+    console.log("PageLayout의 state.session.isLoggedIn", state.session.isLoggedIn);
+    return state.session.isLoggedIn;
+  }); // store에서 isLoggedIn 가져오기
   ///////////////////////////////////////////////////////////
+  useEffect(() => {
+    // 로그인 한 상태에서 로그인 페이지 접속 시 이미지 목록 페이지로 이동
+    if (isLoggedIn === true || serverSession !== null) {
+      navigate('/images');
+    }
+  }, []);
+  
   const address = "https://bitwise.ljlee37.com:8080"; // "https://bitwise.ljlee37.com:8080"
   const handleSubmit = async (event) => {
     event.preventDefault();
