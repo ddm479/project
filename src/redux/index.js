@@ -15,7 +15,7 @@ import persistStore from "redux-persist/es/persistStore";
 
 const persistConfig = {
     key: "root",
-    storage,
+    storage, // 웹의 스토리지
     whitelist: ['session']
 }; 
 
@@ -23,6 +23,7 @@ const rootReducer = combineReducers({
     session: sessionReducer,
 });
 
+// persisConfig가 추가된 rootReducer 반환
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
