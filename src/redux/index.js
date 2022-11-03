@@ -1,9 +1,10 @@
 import { persistReducer } from "redux-persist";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import sessionReducer from "./sessionReducer";
-import storage from "redux-persist/lib/storage/session"; // session storage
+// import storage from "redux-persist/lib/storage/session"; // session storage, 새로고침, 현재 떠있는 탭 내에서만 유지
+import storage from "redux-persist/lib/storage" // local storage, 새로고침 모든 탭에서 유지
 import persistStore from "redux-persist/es/persistStore";
-// import storage from "redux-persist/lib/storage" // local storage
+
 
 // 작은 slice들을 한 곳에 모아 store로 만듦
 // const store = configureStore({
@@ -28,9 +29,10 @@ const store = configureStore({
     reducer: persistedReducer,
 });
 
+// persistStore -> 새로 고침, 종료해도(로컬스토리지인 경우) 지속될 store 생성
 export const persistor = persistStore(store);
 export default store;
-// export default persistReducer(persistConfig, store);
+
 // combinereducer , 자동으로 셋업되어있는 부분
 // thunk , 자동으로 셋업되어있는 부분, 비동기 작업을 처리하는 용도
 // applyMiddleware , 자동으로 셋업되어있는 부분
