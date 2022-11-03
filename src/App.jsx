@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider } from '@mui/material';
 import SignIn from "./pages/user_management/SignIn";
 import SignUp from "./pages/user_management/SignUp";
 import RemoveUser from "./pages/user_management/RemoveUser";
+import NotFound from "./pages/user_management/NotFound";
 
 import ImageUploadPage from "./pages/image/ImageUploadPage";
 import ImageUploadResultPage from "./pages/image/ImageUploadResultPage";
@@ -23,6 +24,7 @@ import { Provider } from 'react-redux'; // store를 자식 컴포넌트에게 �
 // import store from './redux/store'; // store에 세션과 로그인여부에 관한 정보가 있음
 import store, {persistor} from './redux/index';
 import { PersistGate } from 'redux-persist/integration/react';
+// loading props는 리덕스와 스토리지가 동기화 될 동안 표시될 컴포넌트를 지정하는 것
 
 function App() {
   const fontFamily = ['Roboto', 'Arial'].join(',');
@@ -68,6 +70,7 @@ function App() {
                 path="/results/:resultId"
                 element={<PageLayout Article={ResultDetailPage} />}
               />
+              <Route path="*" element={<NotFound/>}/>
             </Routes>
           </PersistGate>
         </Provider>
