@@ -20,7 +20,9 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
 import { Provider } from 'react-redux'; // store를 자식 컴포넌트에게 사용하게 함
-import store from './redux/store'; // store에 세션과 로그인여부에 관한 정보가 있음
+// import store from './redux/store'; // store에 세션과 로그인여부에 관한 정보가 있음
+import store, {persistor} from './redux/index';
+import { PersistGate } from 'redux-persist/integration/react';
 
 function App() {
   const fontFamily = ['Roboto', 'Arial'].join(',');
@@ -34,38 +36,40 @@ function App() {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <ThemeProvider theme={theme}>
         <Provider store={store}>
-          <Routes>
-            <Route index element={<SignIn />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route
-              path="/removeUser"
-              element={<PageLayout Article={RemoveUser} />}
-            />
-            <Route
-              path="/upload"
-              element={<PageLayout Article={ImageUploadPage} />}
-            />
-            <Route
-              path="/test"
-              element={<PageLayout Article={ImageUploadResultPage} />}
-            />
-            <Route
-              path="/images"
-              element={<PageLayout Article={ImageListPage} />}
-            />
-            <Route
-              path="/images/:imageId"
-              element={<PageLayout Article={ImageDetailPage} />}
-            />
-            <Route
-              path="/results"
-              element={<PageLayout Article={ResultListPage} />}
-            />
-            <Route
-              path="/results/:resultId"
-              element={<PageLayout Article={ResultDetailPage} />}
-            />
-          </Routes>
+          <PersistGate loading={null} persistor={persistor}>
+            <Routes>
+              <Route index element={<SignIn />} />
+              <Route path="/signup" element={<SignUp />} />
+              <Route
+                path="/removeUser"
+                element={<PageLayout Article={RemoveUser} />}
+              />
+              <Route
+                path="/upload"
+                element={<PageLayout Article={ImageUploadPage} />}
+              />
+              <Route
+                path="/test"
+                element={<PageLayout Article={ImageUploadResultPage} />}
+              />
+              <Route
+                path="/images"
+                element={<PageLayout Article={ImageListPage} />}
+              />
+              <Route
+                path="/images/:imageId"
+                element={<PageLayout Article={ImageDetailPage} />}
+              />
+              <Route
+                path="/results"
+                element={<PageLayout Article={ResultListPage} />}
+              />
+              <Route
+                path="/results/:resultId"
+                element={<PageLayout Article={ResultDetailPage} />}
+              />
+            </Routes>
+          </PersistGate>
         </Provider>
       </ThemeProvider>
     </BrowserRouter>
